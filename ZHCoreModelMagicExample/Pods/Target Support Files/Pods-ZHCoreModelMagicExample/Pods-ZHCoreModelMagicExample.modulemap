@@ -1,0 +1,6 @@
+framework module Pods_ZHCoreModelMagicExample {
+  umbrella header "Pods-ZHCoreModelMagicExample-umbrella.h"
+
+  export *
+  module * { export * }
+}

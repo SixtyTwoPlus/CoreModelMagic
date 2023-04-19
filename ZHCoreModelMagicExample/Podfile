@@ -1,0 +1,12 @@
+# Uncomment the next line to define a global platform for your project
+# platform :ios, '9.0'
+
+target 'ZHCoreModelMagicExample' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  pod 'MagicalRecord', :git => 'https://github.com/magicalpanda/MagicalRecord' #CoreData管理器
+  pod 'YYCache'
+  use_frameworks!
+
+  # Pods for ZHCoreModelMagicExample
+
+end

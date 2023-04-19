@@ -1,0 +1,3 @@
+${PODS_ROOT}/Target Support Files/Pods-ZHCoreModelMagicExample/Pods-ZHCoreModelMagicExample-frameworks.sh
+${BUILT_PRODUCTS_DIR}/MagicalRecord/MagicalRecord.framework
+${BUILT_PRODUCTS_DIR}/YYCache/YYCache.framework
