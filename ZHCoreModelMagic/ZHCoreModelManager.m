@@ -13,6 +13,7 @@
 @interface ZHCoreModelManager()<NSFetchedResultsControllerDelegate>
 
 @property (nonatomic,assign) BOOL setuped;
+@property (nonatomic,assign) BOOL isSetupController;
 
 @end
 
@@ -30,13 +31,23 @@ ZH_SHAREINSTANCE_IMPLEMENT(ZHCoreModelManager)
     self = [super init];
     if (self) {
         _setuped = NO;
+        _isSetupController = NO;
     }
     return self;
 }
 
-- (void)setresultControllerWith:(NSArray <Class> *)class groupBy:(NSString *)groupBy predicate:(NSPredicate *)predicate{
+- (void)setresultControllerWith:(NSArray <Class> *)class sortedBy:(NSString *)sortedBy predicate:(NSPredicate *)predicate{
+    NSManagedObjectContext *context = [NSManagedObjectContext MR_contextWithParent:[NSManagedObjectContext MR_rootSavingContext]];
+    [self setupControllers:class attribute:sortedBy selector:@selector(MR_fetchAllSortedBy:ascending:withPredicate:groupBy:delegate:inContext:) argumentTypes:@[sortedBy,predicate,@"",self,context]];
+}
+
+
+- (void)setupControllers:(NSArray *)classs attribute:(NSString *)attributed selector:(SEL)selector argumentTypes:(NSArray *)argumentTypes{
+    if(!self.setuped || self.isSetupController){
+        return;
+    }
     BOOL canCountinue = YES;
-    for (Class cls in class) {
+    for (Class cls in classs) {
         if(![cls isSubclassOfClass:NSManagedObject.class]){
             canCountinue = NO;
             break;
@@ -46,11 +57,23 @@ ZH_SHAREINSTANCE_IMPLEMENT(ZHCoreModelManager)
         NSAssert(NO, @"All class item must be subClass of NSManagedObject");
         return;
     }
-    NSManagedObjectContext *context = [NSManagedObjectContext MR_contextWithParent:[NSManagedObjectContext MR_defaultContext]];
-    for (Class cls in class) {
+    for (Class cls in classs) {
         __autoreleasing NSFetchedResultsController *controller;
-        [ZHCoreModelTool classExecute:cls WithSelector:@selector(MR_fetchAllGroupedBy:withPredicate:sortedBy:ascending:delegate:inContext:) argumentTypes:@[groupBy,predicate,@"",@(NO),self,context] resultValue:&controller];
+        [ZHCoreModelTool classExecute:cls WithSelector:selector argumentTypes:argumentTypes resultValue:&controller];
     }
+    self.isSetupController = YES;
+}
+
+- (void)setPackageModels:(NSArray <Class> *)models{
+    
+}
+
+- (void)addDelegate:(id<ZHCoreModelManagerDelegate>)delegate{
+    
+}
+
+- (void)removeDelegate:(id<ZHCoreModelManagerDelegate>)delegate{
+    
 }
 
 #pragma mark - NSFetchedResultsControllerDelegate
