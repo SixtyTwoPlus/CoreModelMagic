@@ -8,12 +8,12 @@
 
 Pod::Spec.new do |s|
 
-  s.name         = "ZHCategory"
-  s.version      = "1.0.1"
-  s.summary      = "this is iOS common category tools"
-  s.description  = <<-DESC 'ZHCategory'
+  s.name         = "ZHCoreModelMagic"
+  s.version      = "1.0.0"
+  s.summary      = "This is a tool library for binding Coredata with Model operations"
+  s.description  = <<-DESC 'ZHCoreModelMagic'
                    DESC
-  s.homepage     = "https://github.com/SixtyTwoPlus/ZHCategory.git"
+  s.homepage     = "https://github.com/SixtyTwoPlus/ZHCoreModelMagic.git"
 
   s.license      = "MIT"
 
@@ -23,9 +23,9 @@ Pod::Spec.new do |s|
 
   s.ios.deployment_target = "9.0"
 
-  s.source       = { :git => "https://github.com/SixtyTwoPlus/ZHCategory.git", :tag => "v#{s.version}" }
+  s.source       = { :git => "https://github.com/SixtyTwoPlus/ZHCoreModelMagic.git", :tag => "v#{s.version}" }
 
-  s.source_files = 'ZHCategory/*'
+  s.source_files = 'ZHCoreModelMagic/*'
 
   s.frameworks   = 'Foundation', 'UIKit'
 
