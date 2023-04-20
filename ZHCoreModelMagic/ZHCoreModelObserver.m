@@ -45,7 +45,7 @@ ZH_SHAREINSTANCE_IMPLEMENT(ZHCoreModelObserver)
 #pragma mark - method
 
 - (void)setNotificationObjects:(NSArray <Class> *)objects{
-    
+    self.notifyObjcs = objects;
 }
 
 #pragma mark - setup controller
@@ -89,6 +89,8 @@ ZH_SHAREINSTANCE_IMPLEMENT(ZHCoreModelObserver)
 
 - (void)addDelegate:(id<ZHCoreModelManagerDelegate>)delegate{
     [self.delegates addObject:delegate];
+    
+    [self fetchAllData];
 }
 
 - (void)removeDelegate:(id<ZHCoreModelManagerDelegate>)delegate{
@@ -98,6 +100,10 @@ ZH_SHAREINSTANCE_IMPLEMENT(ZHCoreModelObserver)
 #pragma mark - NSFetchedResultsControllerDelegate
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller{
+    [self fetchAllData];
+}
+
+- (void)fetchAllData{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     for (Class cls in self.notifyObjcs) {
         if(![cls isSubclassOfClass:ZHCoreModelAbstruct.class]){

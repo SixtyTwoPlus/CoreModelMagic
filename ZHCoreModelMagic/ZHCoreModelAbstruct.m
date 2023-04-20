@@ -124,7 +124,7 @@
 }
 
 + (NSManagedObjectContext *)context{
-    NSManagedObjectContext *context = [NSManagedObjectContext MR_contextWithParent:[NSManagedObjectContext MR_defaultContext]];
+    NSManagedObjectContext *context = [NSManagedObjectContext MR_defaultContext];
     return context;
 }
 
