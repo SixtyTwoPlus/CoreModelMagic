@@ -37,4 +37,6 @@ Pod::Spec.new do |s|
 
   s.dependency 'YYCache'
 
+  s.pod_target_xcconfig = { 'HEADER_SEARCH_PATHS' => '$(PODS_ROOT)/Headers/Public/MagicalRecord' }
+
 end
