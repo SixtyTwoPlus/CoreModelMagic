@@ -33,7 +33,7 @@ Pod::Spec.new do |s|
 
   s.requires_arc = true
 
-  s.dependency 'MagicalRecord','~> 2.4.0'
+  s.dependency 'MagicalRecord'
 
   s.dependency 'YYCache'
 
