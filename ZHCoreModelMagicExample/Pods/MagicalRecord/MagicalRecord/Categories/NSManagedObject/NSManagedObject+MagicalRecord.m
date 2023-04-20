@@ -13,7 +13,7 @@ static NSUInteger kMagicalRecordDefaultBatchSize = 20;
 
 @implementation NSManagedObject (MagicalRecord)
 
-+ (NSString *) MR_entityName
++ (NSString *) MR_entityName;
 {
     NSString *entityName;
 
@@ -305,9 +305,10 @@ static NSUInteger kMagicalRecordDefaultBatchSize = 20;
 
 - (id) MR_inThreadContext
 {
+    NSManagedObject *weakSelf = self;
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-    return [self MR_inContext:[NSManagedObjectContext MR_contextForCurrentThread]];
+    return [weakSelf MR_inContext:[NSManagedObjectContext MR_contextForCurrentThread]];
 #pragma clang diagnostic pop
 }
 

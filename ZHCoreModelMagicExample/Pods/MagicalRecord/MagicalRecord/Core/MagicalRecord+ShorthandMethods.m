@@ -2,7 +2,6 @@
 //  Copyright (c) 2015 Magical Panda Software LLC. All rights reserved.
 
 #import "MagicalRecord+ShorthandMethods.h"
-#import <CoreData/CoreData.h>
 #import <objc/runtime.h>
 
 static NSString *const kMagicalRecordCategoryPrefix = @"MR_";
@@ -90,7 +89,8 @@ static BOOL MRAddShorthandMethodForPrefixedInstanceMethod(Class objectClass, SEL
 {
     NSString *originalSelectorString = NSStringFromSelector(originalSelector);
 
-    if ([originalSelectorString hasPrefix:prefix] == NO)
+    if ([originalSelectorString hasPrefix:prefix] == NO &&
+        ([originalSelectorString hasPrefix:@"_"] || [originalSelectorString hasPrefix:@"init"]))
     {
         NSString *prefixedSelector = [prefix stringByAppendingString:originalSelectorString];
         Method existingMethod = class_getInstanceMethod(objectClass, NSSelectorFromString(prefixedSelector));

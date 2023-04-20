@@ -28,7 +28,7 @@ static volatile int32_t contextsCacheVersion = 0;
 	OSAtomicIncrement32(&contextsCacheVersion);
 }
 
-+ (NSManagedObjectContext *) MR_contextForCurrentThread
++ (NSManagedObjectContext *) MR_contextForCurrentThread;
 {
 	if ([NSThread isMainThread])
 	{
@@ -48,8 +48,7 @@ static volatile int32_t contextsCacheVersion = 0;
 		NSMutableDictionary *threadDict = [[NSThread currentThread] threadDictionary];
 		NSManagedObjectContext *threadContext = [threadDict objectForKey:kMagicalRecordManagedObjectContextKey];
 		NSNumber *currentCacheVersionForContext = [threadDict objectForKey:kMagicalRecordManagedObjectContextCacheVersionKey];
-		NSAssert((threadContext != nil && currentCacheVersionForContext != nil)
-                 || (threadContext == nil && currentCacheVersionForContext == nil),
+		NSAssert((threadContext && currentCacheVersionForContext) || (!threadContext && !currentCacheVersionForContext),
                  @"The Magical Record keys should either both be present or neither be present, otherwise we're in an inconsistent state!");
 		if ((threadContext == nil) || (currentCacheVersionForContext == nil) || ((int32_t)[currentCacheVersionForContext integerValue] != targetCacheVersionForContext))
 		{

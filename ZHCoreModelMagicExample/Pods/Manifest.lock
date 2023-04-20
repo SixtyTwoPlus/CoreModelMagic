@@ -1,30 +1,22 @@
 PODS:
-  - MagicalRecord (2.4.0):
-    - MagicalRecord/Core (= 2.4.0)
-  - MagicalRecord/Core (2.4.0)
+  - MagicalRecord (2.3.2):
+    - MagicalRecord/Core (= 2.3.2)
+  - MagicalRecord/Core (2.3.2)
   - YYCache (1.0.4)
 
 DEPENDENCIES:
-  - MagicalRecord (from `https://github.com/magicalpanda/MagicalRecord`)
+  - MagicalRecord
   - YYCache
 
 SPEC REPOS:
   trunk:
+    - MagicalRecord
     - YYCache
 
-EXTERNAL SOURCES:
-  MagicalRecord:
-    :git: https://github.com/magicalpanda/MagicalRecord
-
-CHECKOUT OPTIONS:
-  MagicalRecord:
-    :commit: 6031f608b79c1d6802007aaed6efd100e11f59ba
-    :git: https://github.com/magicalpanda/MagicalRecord
-
 SPEC CHECKSUMS:
-  MagicalRecord: 1f22a766156474d9f46a9b1e1ce59ca9e37830fc
+  MagicalRecord: 53bed74b4323b930992a725be713e53b37d19755
   YYCache: 8105b6638f5e849296c71f331ff83891a4942952
 
-PODFILE CHECKSUM: d1ea6b45cbc6bb69a54e9f72178490acc3fb917b
+PODFILE CHECKSUM: 6426621781eb6ebfc53332fc066a1cccf1ed2cb3
 
 COCOAPODS: 1.12.0

@@ -6,8 +6,6 @@
 //  Copyright (c) 2012 Magical Panda Software LLC. All rights reserved.
 //
 
-#include <TargetConditionals.h>
-#if TARGET_OS_OSX || TARGET_OS_IOS
 #import <MagicalRecord/MagicalRecordInternal.h>
 #import <MagicalRecord/MagicalRecordXcode7CompatibilityMacros.h>
 
@@ -44,4 +42,3 @@
                                    completion:(void (^ __MR_nullable)(void))completion;
 
 @end
-#endif

@@ -16,7 +16,7 @@ static SEL errorHandlerAction = nil;
 
 @implementation MagicalRecord (ErrorHandling)
 
-+ (void) cleanUpErrorHanding
++ (void) cleanUpErrorHanding;
 {
     errorHandlerTarget = nil;
     errorHandlerAction = nil;
@@ -85,6 +85,11 @@ static SEL errorHandlerAction = nil;
 {
     errorHandlerTarget = target;    /* Deliberately don't retain to avoid potential retain cycles */
     errorHandlerAction = action;
+}
+
+- (void) handleErrors:(NSError *)error
+{
+	[[self class] handleErrors:error];
 }
 
 @end

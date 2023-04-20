@@ -12,6 +12,7 @@
 @interface MagicalRecord (ErrorHandling)
 
 + (void) handleErrors:(MR_nonnull NSError *)error;
+- (void) handleErrors:(MR_nonnull NSError *)error;
 
 + (void) setErrorHandlerTarget:(MR_nullable id)target action:(MR_nonnull SEL)action;
 + (MR_nonnull SEL) errorHandlerAction;
