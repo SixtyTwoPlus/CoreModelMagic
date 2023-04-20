@@ -134,8 +134,8 @@
         NSStringFromSelector(@selector(zh_queryAll)),
         NSStringFromSelector(@selector(zh_queryAllWithPredicate:)),
         NSStringFromSelector(@selector(zh_deleteWithPredicate:)),
-//        NSStringFromSelector(@selector(zh_deleteThisData)),
-//        NSStringFromSelector(@selector(zh_saveOrUpdate)),
+        NSStringFromSelector(@selector(zh_deleteThisData)),
+        NSStringFromSelector(@selector(zh_saveOrUpdate)),
     ];
 }
 
