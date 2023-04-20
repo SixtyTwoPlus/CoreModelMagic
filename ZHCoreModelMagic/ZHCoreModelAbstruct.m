@@ -10,6 +10,7 @@
 #import <objc/runtime.h>
 #import <YYCache/YYCache.h>
 #import "ZHCoreModelTool.h"
+#import "ZHCoreModelObserver.h"
 
 @implementation ZHCoreModelAbstruct
 
@@ -25,13 +26,17 @@
 #pragma mark - public method
 
 - (BOOL)zh_deleteThisData{
-    return [ZHCoreModelAbstruct zh_deleteWithPredicate:ZH_ATTRIBUTE_PREDICATE(@"id = %@",self.identifier)];
+    return [ZHCoreModelAbstruct zh_deleteWithPredicate:ZH_PREDICATE(@"id = %@",self.identifier)];
 }
 
 - (void)zh_saveOrUpdate{
+    if(![ZHCoreModelObserver sharedInstance].setuped){
+        NSAssert(NO, @"Default context is nil! Did you forget to initialize the Core Data Stack?");
+        return;
+    }
     NSManagedObjectContext *context = [ZHCoreModelAbstruct context];
     NSManagedObject *obj = [self getOrCreateObjectWithContext:context];
-    [ZHCoreModelAbstruct zh_packageEntityData:obj];
+    [self zh_packageEntityData:obj];
     [context MR_saveToPersistentStoreAndWait];
 }
 
@@ -68,7 +73,7 @@
 }
 
 + (NSArray *)zh_queryAll{
-    return [self zh_queryAllWithPredicate:ZH_EMPTY_PREDICATE];
+    return [self zh_queryAllWithPredicate:ZH_EMPTY_PREDICATE]; 
 }
 
 + (BOOL)zh_deleteWithPredicate:(NSPredicate *)predicate{
@@ -97,7 +102,7 @@
     return NULL;
 }
 
-+ (void)zh_packageEntityData:(NSManagedObject *)objc{
+- (void)zh_packageEntityData:(NSManagedObject *)objc{
     ZH_OVERRIDE_EXCEPTION
 }
 
@@ -110,8 +115,8 @@
 
 - (NSManagedObject *)getOrCreateObjectWithContext:(NSManagedObjectContext *)context{
     __autoreleasing NSManagedObject *obj;
-    Class entityClass = [ZHCoreModelAbstruct zh_coreDataEntity];
-    [ZHCoreModelTool classExecute:entityClass WithSelector:@selector(MR_findFirstWithPredicate:inContext:) argumentTypes:@[ZH_ATTRIBUTE_PREDICATE(@"id = %@",self.identifier),context] resultValue:&obj];
+    Class entityClass = [self.class zh_coreDataEntity];
+    [ZHCoreModelTool classExecute:entityClass WithSelector:@selector(MR_findFirstWithPredicate:inContext:) argumentTypes:@[ZH_PREDICATE(@"id = %@",self.identifier),context] resultValue:&obj];
     if(!obj){
         [ZHCoreModelTool classExecute:entityClass WithSelector:@selector(MR_createEntityInContext:) argumentTypes:@[context] resultValue:&obj];
     }

@@ -16,7 +16,8 @@
 #pragma mark - predicate
 #define ZH_EMPTY_PREDICATE [NSPredicate predicateWithValue:YES]
 
-#define ZH_ATTRIBUTE_PREDICATE(predicateFormat,...) [NSPredicate predicateWithFormat:predicateFormat,__VA_ARGS__]
+#define ZH_PREDICATE(format, ...) [NSPredicate predicateWithFormat:(format), ##__VA_ARGS__]
+
 
 #pragma mark - shareinstance
 #define ZH_SHAREINSTANCE(_ClassName) \

@@ -6,6 +6,9 @@
 //
 
 #import "AppDelegate.h"
+#import "ZHCoreModelObserver.h"
+#import "Entity+CoreDataClass.h"
+#import "Entity+CoreDataProperties.h"
 
 @interface AppDelegate ()
 
@@ -16,6 +19,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    [ZHCoreModelObserver setupCoreDataWithName:@"ZHCoreModel"];
+    [[ZHCoreModelObserver sharedInstance] setresultControllerWith:@[Entity.class] sortedBy:@"id" groupBy:nil  predicate:ZH_EMPTY_PREDICATE];
+    
     return YES;
 }
 

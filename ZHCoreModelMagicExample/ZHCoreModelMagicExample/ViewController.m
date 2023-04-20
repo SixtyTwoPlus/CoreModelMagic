@@ -6,6 +6,8 @@
 //
 
 #import "ViewController.h"
+#import "ZHCoreModelExample.h"
+#import "ZHCoreModelMagic.h"
 
 @interface ViewController ()
 
@@ -15,7 +17,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    // Do any additional setup after loading the view
+    
+    [ZHCoreModelExample zh_deleteAll];
+    
+    ZHCoreModelExample *example = [ZHCoreModelExample new];
+    example.text = @"hhhh";
+    [example zh_saveOrUpdate];
 }
 
 

@@ -27,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (Class)zh_coreDataEntity;
 
-+ (void)zh_packageEntityData:(NSManagedObject *)objc;
+- (void)zh_packageEntityData:(NSManagedObject *)objc;
 
 + (instancetype)zh_reversePackagingWithEntityData:(NSManagedObject *)objc;
 

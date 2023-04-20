@@ -20,6 +20,38 @@
     }
 }
 
++ (BOOL)isValidNSNumber:(NSNumber *)number forArgumentType:(const char *)argumentType {
+    if (strcmp(argumentType, @encode(char)) == 0) {
+        return [number isKindOfClass:NSNumber.class] && number.charValue == number.doubleValue;
+    } else if (strcmp(argumentType, @encode(int)) == 0) {
+        return [number isKindOfClass:NSNumber.class] && number.intValue == number.doubleValue;
+    } else if (strcmp(argumentType, @encode(short)) == 0) {
+        return [number isKindOfClass:NSNumber.class] && number.shortValue == number.doubleValue;
+    } else if (strcmp(argumentType, @encode(long)) == 0) {
+        return [number isKindOfClass:NSNumber.class] && number.longValue == number.doubleValue;
+    } else if (strcmp(argumentType, @encode(long long)) == 0) {
+        return [number isKindOfClass:NSNumber.class] && number.longLongValue == number.doubleValue;
+    } else if (strcmp(argumentType, @encode(unsigned char)) == 0) {
+        return [number isKindOfClass:NSNumber.class] && number.unsignedCharValue == number.doubleValue;
+    } else if (strcmp(argumentType, @encode(unsigned int)) == 0) {
+        return [number isKindOfClass:NSNumber.class] && number.unsignedIntValue == number.doubleValue;
+    } else if (strcmp(argumentType, @encode(unsigned short)) == 0) {
+        return [number isKindOfClass:NSNumber.class] && number.unsignedShortValue == number.doubleValue;
+    } else if (strcmp(argumentType, @encode(unsigned long)) == 0) {
+        return [number isKindOfClass:NSNumber.class] && number.unsignedLongValue == number.doubleValue;
+    } else if (strcmp(argumentType, @encode(unsigned long long)) == 0) {
+        return [number isKindOfClass:NSNumber.class] && number.unsignedLongLongValue == number.doubleValue;
+    } else if (strcmp(argumentType, @encode(float)) == 0) {
+        return [number isKindOfClass:NSNumber.class];
+    } else if (strcmp(argumentType, @encode(double)) == 0) {
+        return [number isKindOfClass:NSNumber.class];
+    } else if (strcmp(argumentType, @encode(bool)) == 0) {
+        return [number isKindOfClass:NSNumber.class] && (number.boolValue == YES || number.boolValue == NO);
+    }
+    return NO;
+}
+
+
 + (BOOL)validateAndCacheMethodSignatureForClass:(Class)class selector:(SEL)selector argumentTypes:(NSArray *)argumentTypes {
     
     NSMethodSignature *signature = [class methodSignatureForSelector:selector];
@@ -61,15 +93,24 @@
                 break;
             }
         } else {
-            const char *providedArgumentType = object_getClassName(argument);
-            if (strcmp(expectedArgumentType, providedArgumentType) != 0) {
-                isValid = NO;
-                break;
+            if([argument isKindOfClass:NSNumber.class]){
+                if(![self isValidNSNumber:argument forArgumentType:expectedArgumentType]){
+                    isValid = NO;
+                    break;
+                }
+            }else{
+                const char *providedArgumentType = object_getClassName(argument);
+                if (strcmp(expectedArgumentType, providedArgumentType) != 0) {
+                    isValid = NO;
+                    break;
+                }
             }
         }
         argumentIndex++;
     }
-    
+    if(!isValid){
+        return isValid;
+    }
     [cache setObject:@(isValid) forKey:cacheKey];
     return isValid;
 }
