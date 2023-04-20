@@ -7,18 +7,18 @@
 
 #import "ZHCoreModelObserver.h"
 #import <MagicalRecord.h>
-#import "Entity+CoreDataClass.h"
-#import "Entity+CoreDataProperties.h"
+#import "ZHCoreModelAbstruct.h"
 
 #define ZH_DEFAULT_STORE_NAME @"ZHCoreModelMagic.sqlite"
 
 @interface ZHCoreModelObserver()<NSFetchedResultsControllerDelegate>
 
-@property (nonatomic,assign) BOOL           setuped;
-@property (nonatomic,assign) BOOL           isSetupController;
+@property (nonatomic,assign) BOOL                                            setuped;
+@property (nonatomic,assign) BOOL                                            isSetupController;
 
-@property (nonatomic,strong) NSMutableArray *controllers;
-@property (nonatomic,copy) NSArray <Class>  *notifyObjcs;
+@property (nonatomic,strong) NSMutableArray                                  *controllers;
+@property (nonatomic,strong) NSHashTable <id <ZHCoreModelManagerDelegate>>   *delegates;
+@property (nonatomic,copy) NSArray <Class>                                   *notifyObjcs;
 
 @end
 
@@ -37,6 +37,7 @@ ZH_SHAREINSTANCE_IMPLEMENT(ZHCoreModelObserver)
     if (self) {
         _setuped = NO;
         _isSetupController = NO;
+        _delegates = [NSHashTable weakObjectsHashTable];
     }
     return self;
 }
@@ -87,18 +88,30 @@ ZH_SHAREINSTANCE_IMPLEMENT(ZHCoreModelObserver)
 #pragma mark - delegate
 
 - (void)addDelegate:(id<ZHCoreModelManagerDelegate>)delegate{
-    
+    [self.delegates addObject:delegate];
 }
 
 - (void)removeDelegate:(id<ZHCoreModelManagerDelegate>)delegate{
-    
+    [self.delegates removeObject:delegate];
 }
 
 #pragma mark - NSFetchedResultsControllerDelegate
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller{
-    
-    NSLog(@"");
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    for (Class cls in self.notifyObjcs) {
+        if(![cls isSubclassOfClass:ZHCoreModelAbstruct.class]){
+            NSAssert(NO, @"The method of setNotificationObjects parameter must be subClass of ZHCoreModelAbstruct");
+            return;
+        }
+        id result = [cls performSelector:@selector(zh_queryAll)];
+        [dict setValue:result forKey:NSStringFromClass(cls)];
+    }
+    for (id delegate in self.delegates) {
+        if([delegate respondsToSelector:@selector(zhCoreModelObserverCoreDataListDidChanged:)]){
+            [delegate zhCoreModelObserverCoreDataListDidChanged:dict];
+        }
+    }
 }
 
 #pragma mark - getter

@@ -6,6 +6,8 @@
 //
 
 #import "ZHCoreModelAbstruct.h"
+#import "Entity+CoreDataClass.h"
+#import "Entity+CoreDataProperties.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

@@ -6,8 +6,6 @@
 //
 
 #import "ZHCoreModelExample.h"
-#import "Entity+CoreDataClass.h"
-#import "Entity+CoreDataProperties.h"
 
 @implementation ZHCoreModelExample
 

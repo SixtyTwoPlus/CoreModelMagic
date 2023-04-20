@@ -12,10 +12,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol ZHCoreModelManagerDelegate <NSObject>
 
-
+- (void)zhCoreModelObserverCoreDataListDidChanged:(NSDictionary *)dict;
 
 @end
 
+ZH_OBJC_SUBCLASSING_RESTRICTED
 @interface ZHCoreModelObserver : NSObject
 
 ZH_SHAREINSTANCE(ZHCoreModelObserver);

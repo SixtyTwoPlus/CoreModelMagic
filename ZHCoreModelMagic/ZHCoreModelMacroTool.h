@@ -18,7 +18,6 @@
 
 #define ZH_PREDICATE(format, ...) [NSPredicate predicateWithFormat:(format), ##__VA_ARGS__]
 
-
 #pragma mark - shareinstance
 #define ZH_SHAREINSTANCE(_ClassName) \
 \
@@ -36,6 +35,8 @@ sharedInstance = [[_ClassName alloc] init];\
 return sharedInstance;\
 }
 
+#pragma mark - 不可被继承
 
+#define ZH_OBJC_SUBCLASSING_RESTRICTED __attribute__((objc_subclassing_restricted))
 
 #endif /* ZHCoreModelMacroTool_h */
