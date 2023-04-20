@@ -6,9 +6,9 @@
 //
 
 #import "ZHCoreModelAbstruct.h"
-#import "MagicalRecord.h"
-#import <YYCache/YYCache.h>
-#import <objc/runtime.h>
+@import MagicalRecord;
+@import YYCache;
+@import ObjectiveC.runtime;
 #import "ZHCoreModelTool.h"
 #import "ZHCoreModelObserver.h"
 
