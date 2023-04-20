@@ -10,5 +10,6 @@
 
 #import "ZHCoreModelObserver.h"
 #import "ZHCoreModelAbstruct.h"
+#import "ZHCoreModelMagic.h"
 
 #endif /* ZHCoreModelMagic_h */

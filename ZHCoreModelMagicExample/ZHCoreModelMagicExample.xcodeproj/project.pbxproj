@@ -19,8 +19,20 @@
 		4854841629F0387200004C1E /* ZHCoreModelObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4854841529F0387200004C1E /* ZHCoreModelObserver.m */; };
 		4854841929F03BB800004C1E /* ZHCoreModelTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4854841829F03BB800004C1E /* ZHCoreModelTool.m */; };
 		4854841D29F0D27400004C1E /* ZHCoreModelExample.m in Sources */ = {isa = PBXBuildFile; fileRef = 4854841C29F0D27400004C1E /* ZHCoreModelExample.m */; };
+		4854842629F10DB900004C1E /* ZHCoreModelMagicExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4854842529F10DB900004C1E /* ZHCoreModelMagicExampleTests.m */; };
+		4854842C29F10FAB00004C1E /* ZHCoreModelMagicExample.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 485483FE29F02AF700004C1E /* ZHCoreModelMagicExample.xcdatamodeld */; };
 		F07E369B3CE2A3B5412C4252 /* Pods_ZHCoreModelMagicExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3889CE95AC51C2E4CE89D629 /* Pods_ZHCoreModelMagicExample.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4854842729F10DB900004C1E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 485483E729F02AF700004C1E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 485483EE29F02AF700004C1E;
+			remoteInfo = ZHCoreModelMagicExample;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		3889CE95AC51C2E4CE89D629 /* Pods_ZHCoreModelMagicExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZHCoreModelMagicExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -49,6 +61,8 @@
 		4854841A29F03E9E00004C1E /* ZHCoreModelMacroTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZHCoreModelMacroTool.h; sourceTree = "<group>"; };
 		4854841B29F0D27400004C1E /* ZHCoreModelExample.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZHCoreModelExample.h; sourceTree = "<group>"; };
 		4854841C29F0D27400004C1E /* ZHCoreModelExample.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZHCoreModelExample.m; sourceTree = "<group>"; };
+		4854842329F10DB900004C1E /* ZHCoreModelMagicExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZHCoreModelMagicExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4854842529F10DB900004C1E /* ZHCoreModelMagicExampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZHCoreModelMagicExampleTests.m; sourceTree = "<group>"; };
 		897C621054F84BDAB4A826EC /* Pods-ZHCoreModelMagicExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZHCoreModelMagicExample.release.xcconfig"; path = "Target Support Files/Pods-ZHCoreModelMagicExample/Pods-ZHCoreModelMagicExample.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -61,6 +75,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		4854842029F10DB900004C1E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -68,6 +89,7 @@
 			isa = PBXGroup;
 			children = (
 				485483F129F02AF700004C1E /* ZHCoreModelMagicExample */,
+				4854842429F10DB900004C1E /* ZHCoreModelMagicExampleTests */,
 				485483F029F02AF700004C1E /* Products */,
 				60704DA5289D0CCB240C17CB /* Pods */,
 				A9FE143C2D86B9D181AB28C1 /* Frameworks */,
@@ -78,6 +100,7 @@
 			isa = PBXGroup;
 			children = (
 				485483EF29F02AF700004C1E /* ZHCoreModelMagicExample.app */,
+				4854842329F10DB900004C1E /* ZHCoreModelMagicExampleTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -129,6 +152,14 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		4854842429F10DB900004C1E /* ZHCoreModelMagicExampleTests */ = {
+			isa = PBXGroup;
+			children = (
+				4854842529F10DB900004C1E /* ZHCoreModelMagicExampleTests.m */,
+			);
+			path = ZHCoreModelMagicExampleTests;
+			sourceTree = "<group>";
+		};
 		60704DA5289D0CCB240C17CB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -168,6 +199,24 @@
 			productReference = 485483EF29F02AF700004C1E /* ZHCoreModelMagicExample.app */;
 			productType = "com.apple.product-type.application";
 		};
+		4854842229F10DB900004C1E /* ZHCoreModelMagicExampleTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4854842929F10DB900004C1E /* Build configuration list for PBXNativeTarget "ZHCoreModelMagicExampleTests" */;
+			buildPhases = (
+				4854841F29F10DB900004C1E /* Sources */,
+				4854842029F10DB900004C1E /* Frameworks */,
+				4854842129F10DB900004C1E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4854842829F10DB900004C1E /* PBXTargetDependency */,
+			);
+			name = ZHCoreModelMagicExampleTests;
+			productName = ZHCoreModelMagicExampleTests;
+			productReference = 4854842329F10DB900004C1E /* ZHCoreModelMagicExampleTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -179,6 +228,10 @@
 				TargetAttributes = {
 					485483EE29F02AF700004C1E = {
 						CreatedOnToolsVersion = 14.2;
+					};
+					4854842229F10DB900004C1E = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = 485483EE29F02AF700004C1E;
 					};
 				};
 			};
@@ -196,6 +249,7 @@
 			projectRoot = "";
 			targets = (
 				485483EE29F02AF700004C1E /* ZHCoreModelMagicExample */,
+				4854842229F10DB900004C1E /* ZHCoreModelMagicExampleTests */,
 			);
 		};
 /* End PBXProject section */
@@ -208,6 +262,13 @@
 				4854840529F02AF800004C1E /* LaunchScreen.storyboard in Resources */,
 				4854840229F02AF800004C1E /* Assets.xcassets in Resources */,
 				485483FD29F02AF700004C1E /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4854842129F10DB900004C1E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,7 +333,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		4854841F29F10DB900004C1E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4854842629F10DB900004C1E /* ZHCoreModelMagicExampleTests.m in Sources */,
+				4854842C29F10FAB00004C1E /* ZHCoreModelMagicExample.xcdatamodeld in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4854842829F10DB900004C1E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 485483EE29F02AF700004C1E /* ZHCoreModelMagicExample */;
+			targetProxy = 4854842729F10DB900004C1E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		485483FB29F02AF700004C1E /* Main.storyboard */ = {
@@ -458,6 +536,38 @@
 			};
 			name = Release;
 		};
+		4854842A29F10DB900004C1E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zh.ZHCoreModelMagicExampleTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ZHCoreModelMagicExample.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ZHCoreModelMagicExample";
+			};
+			name = Debug;
+		};
+		4854842B29F10DB900004C1E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zh.ZHCoreModelMagicExampleTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ZHCoreModelMagicExample.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/ZHCoreModelMagicExample";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -475,6 +585,15 @@
 			buildConfigurations = (
 				4854840C29F02AF800004C1E /* Debug */,
 				4854840D29F02AF800004C1E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4854842929F10DB900004C1E /* Build configuration list for PBXNativeTarget "ZHCoreModelMagicExampleTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4854842A29F10DB900004C1E /* Debug */,
+				4854842B29F10DB900004C1E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

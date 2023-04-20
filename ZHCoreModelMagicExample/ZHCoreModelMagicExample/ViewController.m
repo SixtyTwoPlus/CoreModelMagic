@@ -9,7 +9,7 @@
 #import "ZHCoreModelExample.h"
 #import "ZHCoreModelMagic.h"
 
-@interface ViewController ()<ZHCoreModelManagerDelegate>
+@interface ViewController ()
 
 @end
 
@@ -18,21 +18,5 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view
-    
-    [[ZHCoreModelObserver sharedInstance] addDelegate:self];
-    
-    ZHCoreModelExample *example = [ZHCoreModelExample new];
-    example.text = @"hhhh";
-    [example zh_saveOrUpdate];
-    
-    NSLog(@"");
-    
 }
-
-
-- (void)zhCoreModelObserverCoreDataListDidChanged:(NSDictionary *)dict{
-    
-    NSLog(@"");
-}
-
 @end

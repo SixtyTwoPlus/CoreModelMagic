@@ -18,10 +18,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    [ZHCoreModelObserver setupCoreDataWithName:@"ZHCoreModel"];
-    [[ZHCoreModelObserver sharedInstance] setresultControllerWith:@[Entity.class] sortedBy:@"id" groupBy:nil predicate:ZH_EMPTY_PREDICATE];
-    [[ZHCoreModelObserver sharedInstance] setNotificationObjects:@[ZHCoreModelExample.class]];
-    
     return YES;
 }
 
