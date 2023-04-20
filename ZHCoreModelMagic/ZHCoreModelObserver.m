@@ -6,7 +6,7 @@
 //
 
 #import "ZHCoreModelObserver.h"
-#import <MagicalRecord/MagicalRecord.h>
+#import "MagicalRecord/MagicalRecord.h"
 #import "ZHCoreModelAbstruct.h"
 
 #define ZH_DEFAULT_STORE_NAME @"ZHCoreModelMagic.sqlite"
