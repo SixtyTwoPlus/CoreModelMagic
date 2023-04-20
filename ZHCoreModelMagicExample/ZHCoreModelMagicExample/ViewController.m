@@ -21,13 +21,12 @@
     
     [[ZHCoreModelObserver sharedInstance] addDelegate:self];
     
-    NSArray *arr = [ZHCoreModelExample zh_queryAll];
-    
-//    ZHCoreModelExample *example = [ZHCoreModelExample new];
-//    example.text = @"hhhh";
-//    [example zh_saveOrUpdate];
+    ZHCoreModelExample *example = [ZHCoreModelExample new];
+    example.text = @"hhhh";
+    [example zh_saveOrUpdate];
     
     NSLog(@"");
+    
 }
 
 

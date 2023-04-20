@@ -26,7 +26,7 @@
 #pragma mark - public method
 
 - (BOOL)zh_deleteThisData{
-    return [ZHCoreModelAbstruct zh_deleteWithPredicate:ZH_PREDICATE(@"id = %@",self.identifier)];
+    return [self.class zh_deleteWithPredicate:ZH_PREDICATE(@"id = %@",self.identifier)];
 }
 
 - (void)zh_saveOrUpdate{
@@ -134,8 +134,8 @@
         NSStringFromSelector(@selector(zh_queryAll)),
         NSStringFromSelector(@selector(zh_queryAllWithPredicate:)),
         NSStringFromSelector(@selector(zh_deleteWithPredicate:)),
-        NSStringFromSelector(@selector(zh_deleteThisData)),
-        NSStringFromSelector(@selector(zh_saveOrUpdate)),
+//        NSStringFromSelector(@selector(zh_deleteThisData)),
+//        NSStringFromSelector(@selector(zh_saveOrUpdate)),
     ];
 }
 

@@ -14,6 +14,7 @@
     return Entity.class;
 }
 
+
 - (void)zh_packageEntityData:(NSManagedObject *)objc{
     if([objc isKindOfClass:Entity.class]){
         Entity *entity = (Entity *)objc;
