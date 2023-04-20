@@ -50,16 +50,16 @@ ZH_SHAREINSTANCE_IMPLEMENT(ZHCoreModelObserver)
 
 #pragma mark - setup controller
 
-- (void)setresultControllerWith:(NSArray <Class> *)class sortedBy:(NSString *)sortedBy groupBy:(NSString *)groupBy predicate:(NSPredicate *)predicate{
+- (void)setresultControllerWith:(NSArray <Class> *)class sortedBy:(NSString *)sortedBy ascending:(BOOL)ascending groupBy:(NSString *)groupBy predicate:(NSPredicate *)predicate{
     NSManagedObjectContext *context = [NSManagedObjectContext MR_rootSavingContext];
     NSString *groupObjc = [ZHCoreModelTool zh_isStrNull:groupBy] ? sortedBy : groupBy;
-    [self setupControllers:class  selector:@selector(MR_fetchAllSortedBy:ascending:withPredicate:groupBy:delegate:inContext:) argumentTypes:@[sortedBy,@(NO),predicate,groupObjc,self,context]];
+    [self setupControllers:class  selector:@selector(MR_fetchAllSortedBy:ascending:withPredicate:groupBy:delegate:inContext:) argumentTypes:@[sortedBy,@(ascending),predicate,groupObjc,self,context]];
 }
 
-- (void)setResultControllerWith:(NSArray <Class> *)class groupBy:(NSString *)groupBy sortedBy:(NSString *)sortedBy predicate:(NSPredicate *)predicate{
+- (void)setResultControllerWith:(NSArray <Class> *)class groupBy:(NSString *)groupBy sortedBy:(NSString *)sortedBy ascending:(BOOL)ascending predicate:(NSPredicate *)predicate{
     NSManagedObjectContext *context = [NSManagedObjectContext MR_rootSavingContext];
     NSString *sortedByObj = [ZHCoreModelTool zh_isStrNull:sortedBy] ? groupBy : sortedBy;
-    [self setupControllers:class selector:@selector(MR_fetchAllGroupedBy:withPredicate:sortedBy:ascending:delegate:inContext:) argumentTypes:@[groupBy,predicate,sortedByObj,@(NO),self,context]];
+    [self setupControllers:class selector:@selector(MR_fetchAllGroupedBy:withPredicate:sortedBy:ascending:delegate:inContext:) argumentTypes:@[groupBy,predicate,sortedByObj,@(ascending),self,context]];
 }
 
 - (void)setupControllers:(NSArray *)classs selector:(SEL)selector argumentTypes:(NSArray *)argumentTypes{
