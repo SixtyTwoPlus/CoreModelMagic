@@ -27,8 +27,14 @@ Pod::Spec.new do |s|
 
   s.source_files = 'ZHCoreModelMagic/*'
 
-  s.frameworks   = 'Foundation', 'UIKit'
+  s.libraries    = 'objc'
+	
+  s.frameworks   = 'Foundation'
 
   s.requires_arc = true
+
+  s.dependency 'MagicalRecord','~> 2.4.0'
+
+  s.dependency 'YYCache'
 
 end
