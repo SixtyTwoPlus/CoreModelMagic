@@ -89,7 +89,6 @@ ZH_SHAREINSTANCE_IMPLEMENT(ZHCoreModelObserver)
 
 - (void)addDelegate:(id<ZHCoreModelManagerDelegate>)delegate{
     [self.delegates addObject:delegate];
-    
     [self fetchAllData];
 }
 
