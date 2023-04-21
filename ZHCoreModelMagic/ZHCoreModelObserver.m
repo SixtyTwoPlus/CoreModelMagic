@@ -8,6 +8,7 @@
 #import "ZHCoreModelObserver.h"
 @import MagicalRecord;
 #import "ZHCoreModelAbstruct.h"
+#import "ZHCoreModelTool.h"
 
 #define ZH_DEFAULT_STORE_NAME @"ZHCoreModelMagic.sqlite"
 
@@ -17,7 +18,7 @@
 @property (nonatomic,assign) BOOL                                            isSetupController;
 
 @property (nonatomic,strong) NSMutableArray                                  *controllers;
-@property (nonatomic,strong) NSHashTable <id <ZHCoreModelManagerDelegate>>   *delegates;
+@property (nonatomic,strong) NSHashTable <id <ZHCoreModelObserverDelegate>>   *delegates;
 @property (nonatomic,copy) NSArray <Class>                                   *notifyObjcs;
 
 @end
@@ -87,12 +88,12 @@ ZH_SHAREINSTANCE_IMPLEMENT(ZHCoreModelObserver)
 
 #pragma mark - delegate
 
-- (void)addDelegate:(id<ZHCoreModelManagerDelegate>)delegate{
+- (void)addDelegate:(id<ZHCoreModelObserverDelegate>)delegate{
     [self.delegates addObject:delegate];
     [self fetchAllData];
 }
 
-- (void)removeDelegate:(id<ZHCoreModelManagerDelegate>)delegate{
+- (void)removeDelegate:(id<ZHCoreModelObserverDelegate>)delegate{
     [self.delegates removeObject:delegate];
 }
 

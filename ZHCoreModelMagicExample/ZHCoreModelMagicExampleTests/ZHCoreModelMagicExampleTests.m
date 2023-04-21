@@ -9,7 +9,7 @@
 #import "ZHCoreModelMagic.h"
 #import "ZHCoreModelExample.h"
 
-@interface ZHCoreModelMagicExampleTests : XCTestCase <ZHCoreModelManagerDelegate>
+@interface ZHCoreModelMagicExampleTests : XCTestCase <ZHCoreModelObserverDelegate>
 
 @end
 
@@ -18,7 +18,7 @@
 - (void)setUp {
     // Put setup code here. This method is called before the invocation of each test method in the class.
     [ZHCoreModelObserver setupCoreDataWithName:@"ZHCoreModel"];
-    [[ZHCoreModelObserver sharedInstance] setresultControllerWith:@[Entity.class] sortedBy:@"id" groupBy:nil predicate:ZH_EMPTY_PREDICATE];
+    [[ZHCoreModelObserver sharedInstance] setresultControllerWith:@[ZHCoreModelExample.zh_coreDataEntity] sortedBy:@"id" ascending:YES groupBy:@"" predicate:ZH_EMPTY_PREDICATE];
     [[ZHCoreModelObserver sharedInstance] setNotificationObjects:@[ZHCoreModelExample.class]];
     [[ZHCoreModelObserver sharedInstance] addDelegate:self];
     

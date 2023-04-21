@@ -6,11 +6,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ZHCoreModelTool.h"
+#import "ZHCoreModelMacroTool.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol ZHCoreModelManagerDelegate <NSObject>
+@protocol ZHCoreModelObserverDelegate <NSObject>
 
 - (void)zhCoreModelObserverCoreDataListDidChanged:(NSDictionary *)dict;
 
@@ -34,9 +34,9 @@ ZH_SHAREINSTANCE(ZHCoreModelObserver);
 - (void)setNotificationObjects:(NSArray <Class> *)objects;
 
 #pragma mark - delegate
-- (void)addDelegate:(id <ZHCoreModelManagerDelegate>)delegate;
+- (void)addDelegate:(id <ZHCoreModelObserverDelegate>)delegate;
 
-- (void)removeDelegate:(id <ZHCoreModelManagerDelegate>)delegate;
+- (void)removeDelegate:(id <ZHCoreModelObserverDelegate>)delegate;
 
 - (instancetype)init NS_UNAVAILABLE;
 
