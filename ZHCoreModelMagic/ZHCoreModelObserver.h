@@ -30,9 +30,6 @@ ZH_SHAREINSTANCE(ZHCoreModelObserver);
 
 - (void)setResultControllerWith:(NSArray <Class> *)class groupBy:(NSString *)groupBy sortedBy:(NSString *)sortedBy ascending:(BOOL)ascending predicate:(NSPredicate *)predicate;
 
-#pragma mark - method
-- (void)setNotificationObjects:(NSArray <Class> *)objects;
-
 #pragma mark - delegate
 - (void)addDelegate:(id <ZHCoreModelObserverDelegate>)delegate;
 

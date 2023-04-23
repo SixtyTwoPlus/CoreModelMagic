@@ -14,12 +14,12 @@
 
 @interface ZHCoreModelObserver()<NSFetchedResultsControllerDelegate>
 
-@property (nonatomic,assign) BOOL                                            setuped;
-@property (nonatomic,assign) BOOL                                            isSetupController;
+@property (nonatomic,assign) BOOL                                             setuped;
+@property (nonatomic,assign) BOOL                                             isSetupController;
 
-@property (nonatomic,strong) NSMutableArray                                  *controllers;
+@property (nonatomic,strong) NSMutableArray                                   *controllers;
 @property (nonatomic,strong) NSHashTable <id <ZHCoreModelObserverDelegate>>   *delegates;
-@property (nonatomic,copy) NSArray <Class>                                   *notifyObjcs;
+@property (nonatomic,copy) NSMutableArray <Class>                             *notifyObjcs;
 
 @end
 
@@ -43,12 +43,6 @@ ZH_SHAREINSTANCE_IMPLEMENT(ZHCoreModelObserver)
     return self;
 }
 
-#pragma mark - method
-
-- (void)setNotificationObjects:(NSArray <Class> *)objects{
-    self.notifyObjcs = objects;
-}
-
 #pragma mark - setup controller
 
 - (void)setresultControllerWith:(NSArray <Class> *)class sortedBy:(NSString *)sortedBy ascending:(BOOL)ascending groupBy:(NSString *)groupBy predicate:(NSPredicate *)predicate{
@@ -69,19 +63,25 @@ ZH_SHAREINSTANCE_IMPLEMENT(ZHCoreModelObserver)
     }
     BOOL canCountinue = YES;
     for (Class cls in classs) {
-        if(![cls isSubclassOfClass:NSManagedObject.class]){
+        if(![cls isSubclassOfClass:ZHCoreModelAbstruct.class]){
             canCountinue = NO;
             break;
         }
     }
     if(!canCountinue){
-        NSAssert(NO, @"All class item must be subClass of NSManagedObject");
+        NSAssert(NO, @"All class item must be subClass of ZHCoreModelAbstruct");
         return;
     }
     for (Class cls in classs) {
         __autoreleasing NSFetchedResultsController *controller;
-        [ZHCoreModelTool classExecute:cls WithSelector:selector argumentTypes:argumentTypes resultValue:&controller];
+        id entity = [cls performSelector:@selector(zh_coreDataEntity)];
+        if(!entity){
+            NSAssert(NO, @"Subclass must override zh_CoreDataEntity method");
+            return;
+        }
+        [ZHCoreModelTool classExecute:entity WithSelector:selector argumentTypes:argumentTypes resultValue:&controller];
         [self.controllers addObject:controller];
+        [self.notifyObjcs addObject:cls];
     }
     self.isSetupController = YES;
 }
@@ -127,6 +127,13 @@ ZH_SHAREINSTANCE_IMPLEMENT(ZHCoreModelObserver)
         _controllers = [NSMutableArray array];
     }
     return _controllers;
+}
+
+- (NSMutableArray<Class> *)notifyObjcs{
+    if(!_notifyObjcs){
+        _notifyObjcs = [NSMutableArray array];
+    }
+    return _notifyObjcs;
 }
 
 - (BOOL)setuped{

@@ -18,8 +18,7 @@
 - (void)setUp {
     // Put setup code here. This method is called before the invocation of each test method in the class.
     [ZHCoreModelObserver setupCoreDataWithName:@"ZHCoreModel"];
-    [[ZHCoreModelObserver sharedInstance] setresultControllerWith:@[ZHCoreModelExample.zh_coreDataEntity] sortedBy:@"id" ascending:YES groupBy:@"" predicate:ZH_EMPTY_PREDICATE];
-    [[ZHCoreModelObserver sharedInstance] setNotificationObjects:@[ZHCoreModelExample.class]];
+    [[ZHCoreModelObserver sharedInstance] setresultControllerWith:@[ZHCoreModelExample.class] sortedBy:@"id" ascending:YES groupBy:@"" predicate:ZH_EMPTY_PREDICATE];
     [[ZHCoreModelObserver sharedInstance] addDelegate:self];
     
     [ZHCoreModelExample zh_deleteAll];

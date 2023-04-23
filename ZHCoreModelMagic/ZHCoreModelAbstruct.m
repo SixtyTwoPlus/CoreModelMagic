@@ -12,6 +12,11 @@
 #import "ZHCoreModelTool.h"
 #import "ZHCoreModelObserver.h"
 
+#define FORGETINIT \
+if(![ZHCoreModelObserver sharedInstance].setuped){\
+    NSAssert(NO, @"Default context is nil! Did you forget to initialize the Core Data Stack?");\
+}
+
 @implementation ZHCoreModelAbstruct
 
 - (instancetype)init
@@ -26,14 +31,12 @@
 #pragma mark - public method
 
 - (BOOL)zh_deleteThisData{
+    FORGETINIT
     return [self.class zh_deleteWithPredicate:ZH_PREDICATE(@"id = %@",self.identifier)];
 }
 
 - (void)zh_saveOrUpdate{
-    if(![ZHCoreModelObserver sharedInstance].setuped){
-        NSAssert(NO, @"Default context is nil! Did you forget to initialize the Core Data Stack?");
-        return;
-    }
+    FORGETINIT
     NSManagedObjectContext *context = [ZHCoreModelAbstruct context];
     NSManagedObject *obj = [self getOrCreateObjectWithContext:context];
     [self zh_packageEntityData:obj];
@@ -69,14 +72,17 @@
 #pragma mark - ZHCoreModelActionProtocol
 
 + (BOOL)zh_deleteAll{
+    FORGETINIT
     return [self zh_deleteWithPredicate:ZH_EMPTY_PREDICATE];
 }
 
 + (NSArray *)zh_queryAll{
+    FORGETINIT
     return [self zh_queryAllWithPredicate:ZH_EMPTY_PREDICATE]; 
 }
 
 + (BOOL)zh_deleteWithPredicate:(NSPredicate *)predicate{
+    FORGETINIT
     BOOL result = NO;
     NSManagedObjectContext *context = [self context];
     [ZHCoreModelTool classExecute:[self zh_coreDataEntity] WithSelector:@selector(MR_deleteAllMatchingPredicate:inContext:) argumentTypes:@[predicate,context] resultValue:&result];
@@ -85,6 +91,7 @@
 }
 
 + (NSArray *)zh_queryAllWithPredicate:(NSPredicate *)predicate{
+    FORGETINIT
     __autoreleasing NSArray *results;
     [ZHCoreModelTool classExecute:[self zh_coreDataEntity] WithSelector:@selector(MR_findAllWithPredicate:inContext:) argumentTypes:@[predicate,[self context]] resultValue:&results];
     NSMutableArray *repackagineArray = [NSMutableArray array];
