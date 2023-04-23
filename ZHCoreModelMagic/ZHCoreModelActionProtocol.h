@@ -14,11 +14,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (BOOL)zh_deleteAll;
 
++ (BOOL)zh_deleteWithKey:(NSString *)key value:(NSString *)value;
+
 + (BOOL)zh_deleteWithPredicate:(NSPredicate *)predicate;
 
 + (NSArray *)zh_queryAll;
 
++ (NSArray *)zh_quertWithKey:(NSString *)key value:(id)value;
+
++ (NSArray *)zh_quertWithKey:(NSString *)key value:(id)value sorted:(NSString *)sorted ascending:(BOOL)ascending;
+
 + (NSArray *)zh_queryAllWithPredicate:(NSPredicate *)predicate;
+
++ (NSArray *)zh_queryAllWithPredicate:(NSPredicate *)predicate sorted:(NSString * _Nullable)sorted ascending:(BOOL)ascending;
 
 @end
 

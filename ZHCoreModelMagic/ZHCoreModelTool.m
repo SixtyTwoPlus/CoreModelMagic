@@ -116,10 +116,6 @@
 }
 
 + (void)classExecute:(Class)classs WithSelector:(SEL)selector argumentTypes:(NSArray *)argumentTypes resultValue:(void *)resultValue {
-    if (![classs isSubclassOfClass:NSManagedObject.class]) {
-        NSAssert(NO, @"The method of operationEntity must be a subclass of NSManagedObject");
-        return;
-    }
     
     if(![classs respondsToSelector:selector]){
         NSAssert(NO, @"The class did'n have method of %@",NSStringFromSelector(selector));

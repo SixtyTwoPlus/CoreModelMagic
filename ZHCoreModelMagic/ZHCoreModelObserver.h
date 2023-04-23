@@ -26,9 +26,9 @@ ZH_SHAREINSTANCE(ZHCoreModelObserver);
 + (void)setupCoreDataWithName:(NSString *)name;
 
 #pragma mark - setup controller
-- (void)setresultControllerWith:(NSArray <Class> *)class sortedBy:(NSString *)sortedBy ascending:(BOOL)ascending groupBy:(NSString *)groupBy predicate:(NSPredicate *)predicate;
+- (void)setresultControllerWith:(NSArray <Class> *)class sortedBy:(NSString *)sortedBy ascending:(BOOL)ascending groupBy:(NSString * _Nullable)groupBy predicate:(NSPredicate *)predicate;
 
-- (void)setResultControllerWith:(NSArray <Class> *)class groupBy:(NSString *)groupBy sortedBy:(NSString *)sortedBy ascending:(BOOL)ascending predicate:(NSPredicate *)predicate;
+- (void)setResultControllerWith:(NSArray <Class> *)class groupBy:(NSString *)groupBy sortedBy:(NSString * _Nullable)sortedBy ascending:(BOOL)ascending predicate:(NSPredicate *)predicate;
 
 #pragma mark - delegate
 - (void)addDelegate:(id <ZHCoreModelObserverDelegate>)delegate;

@@ -10,12 +10,9 @@
 #import "ZHCoreModelAbstruct.h"
 #import "ZHCoreModelTool.h"
 
-#define ZH_DEFAULT_STORE_NAME @"ZHCoreModelMagic.sqlite"
-
 @interface ZHCoreModelObserver()<NSFetchedResultsControllerDelegate>
 
 @property (nonatomic,assign) BOOL                                             setuped;
-@property (nonatomic,assign) BOOL                                             isSetupController;
 
 @property (nonatomic,strong) NSMutableArray                                   *controllers;
 @property (nonatomic,strong) NSHashTable <id <ZHCoreModelObserverDelegate>>   *delegates;
@@ -37,7 +34,6 @@ ZH_SHAREINSTANCE_IMPLEMENT(ZHCoreModelObserver)
     self = [super init];
     if (self) {
         _setuped = NO;
-        _isSetupController = NO;
         _delegates = [NSHashTable weakObjectsHashTable];
     }
     return self;
@@ -46,21 +42,24 @@ ZH_SHAREINSTANCE_IMPLEMENT(ZHCoreModelObserver)
 #pragma mark - setup controller
 
 - (void)setresultControllerWith:(NSArray <Class> *)class sortedBy:(NSString *)sortedBy ascending:(BOOL)ascending groupBy:(NSString *)groupBy predicate:(NSPredicate *)predicate{
+    if(!self.setuped){
+        return;
+    }
     NSManagedObjectContext *context = [NSManagedObjectContext MR_rootSavingContext];
     NSString *groupObjc = [ZHCoreModelTool zh_isStrNull:groupBy] ? sortedBy : groupBy;
     [self setupControllers:class  selector:@selector(MR_fetchAllSortedBy:ascending:withPredicate:groupBy:delegate:inContext:) argumentTypes:@[sortedBy,@(ascending),predicate,groupObjc,self,context]];
 }
 
 - (void)setResultControllerWith:(NSArray <Class> *)class groupBy:(NSString *)groupBy sortedBy:(NSString *)sortedBy ascending:(BOOL)ascending predicate:(NSPredicate *)predicate{
+    if(!self.setuped){
+        return;
+    }
     NSManagedObjectContext *context = [NSManagedObjectContext MR_rootSavingContext];
     NSString *sortedByObj = [ZHCoreModelTool zh_isStrNull:sortedBy] ? groupBy : sortedBy;
     [self setupControllers:class selector:@selector(MR_fetchAllGroupedBy:withPredicate:sortedBy:ascending:delegate:inContext:) argumentTypes:@[groupBy,predicate,sortedByObj,@(ascending),self,context]];
 }
 
 - (void)setupControllers:(NSArray *)classs selector:(SEL)selector argumentTypes:(NSArray *)argumentTypes{
-    if(!self.setuped || self.isSetupController){
-        return;
-    }
     BOOL canCountinue = YES;
     for (Class cls in classs) {
         if(![cls isSubclassOfClass:ZHCoreModelAbstruct.class]){
@@ -83,7 +82,7 @@ ZH_SHAREINSTANCE_IMPLEMENT(ZHCoreModelObserver)
         [self.controllers addObject:controller];
         [self.notifyObjcs addObject:cls];
     }
-    self.isSetupController = YES;
+    self.setuped = YES;
 }
 
 #pragma mark - delegate
@@ -134,14 +133,6 @@ ZH_SHAREINSTANCE_IMPLEMENT(ZHCoreModelObserver)
         _notifyObjcs = [NSMutableArray array];
     }
     return _notifyObjcs;
-}
-
-- (BOOL)setuped{
-    if(!_setuped){
-        [ZHCoreModelObserver setupCoreDataWithName:ZH_DEFAULT_STORE_NAME];
-        _setuped = YES;
-    }
-    return _setuped;
 }
 
 @end

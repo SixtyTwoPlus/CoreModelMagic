@@ -76,10 +76,29 @@ if(![ZHCoreModelObserver sharedInstance].setuped){\
     return [self zh_deleteWithPredicate:ZH_EMPTY_PREDICATE];
 }
 
++ (BOOL)zh_deleteWithKey:(NSString *)key value:(NSString *)value{
+    return [self zh_deleteWithPredicate:ZH_PREDICATE(@"%@ = %@",key,value)];
+}
+
 + (NSArray *)zh_queryAll{
     FORGETINIT
-    return [self zh_queryAllWithPredicate:ZH_EMPTY_PREDICATE]; 
+    return [self zh_queryAllWithPredicate:ZH_EMPTY_PREDICATE];
 }
+
++ (NSArray *)zh_quertWithKey:(NSString *)key value:(id)value{
+    return [self zh_queryAllWithPredicate:ZH_PREDICATE([self generatePredicateStrWithKey:key value:value])];
+}
+
++ (NSArray *)zh_quertWithKey:(NSString *)key value:(id)value sorted:(NSString *)sorted ascending:(BOOL)ascending{
+    return [self zh_queryAllWithPredicate:ZH_PREDICATE([self generatePredicateStrWithKey:key value:value]) sorted:sorted ascending:ascending];
+}
+
++ (NSArray *)zh_queryAllWithPredicate:(NSPredicate *)predicate{
+    FORGETINIT
+    return [self zh_queryAllWithPredicate:predicate sorted:nil ascending:NO];
+}
+
+#pragma mark - core method
 
 + (BOOL)zh_deleteWithPredicate:(NSPredicate *)predicate{
     FORGETINIT
@@ -90,10 +109,18 @@ if(![ZHCoreModelObserver sharedInstance].setuped){\
     return result;
 }
 
-+ (NSArray *)zh_queryAllWithPredicate:(NSPredicate *)predicate{
++ (NSArray *)zh_queryAllWithPredicate:(NSPredicate *)predicate sorted:(NSString *)sorted ascending:(BOOL)ascending{
     FORGETINIT
     __autoreleasing NSArray *results;
-    [ZHCoreModelTool classExecute:[self zh_coreDataEntity] WithSelector:@selector(MR_findAllWithPredicate:inContext:) argumentTypes:@[predicate,[self context]] resultValue:&results];
+    BOOL needSort = ![ZHCoreModelTool zh_isStrNull:sorted];
+    NSArray *arr = @[predicate,[self context]];
+    SEL method = @selector(MR_findAllWithPredicate:inContext:);
+    //是否需要排序
+    if(needSort){
+        method = @selector(MR_findAllSortedBy:ascending:withPredicate:inContext:);
+        arr = [@[sorted,@(ascending)] arrayByAddingObjectsFromArray:arr];
+    }
+    [ZHCoreModelTool classExecute:[self zh_coreDataEntity] WithSelector:method argumentTypes:arr resultValue:&results];
     NSMutableArray *repackagineArray = [NSMutableArray array];
     for (NSManagedObject *obj in results) {
         id model = [self zh_reversePackagingWithEntityData:obj];
@@ -144,6 +171,10 @@ if(![ZHCoreModelObserver sharedInstance].setuped){\
         NSStringFromSelector(@selector(zh_deleteThisData)),
         NSStringFromSelector(@selector(zh_saveOrUpdate)),
     ];
+}
+
++ (NSString *)generatePredicateStrWithKey:(NSString *)key value:(id)value{
+    return [NSString stringWithFormat:@"%@ = '%@'",key,value];
 }
 
 @end

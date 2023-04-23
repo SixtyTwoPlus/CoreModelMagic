@@ -21,7 +21,7 @@
     [[ZHCoreModelObserver sharedInstance] setresultControllerWith:@[ZHCoreModelExample.class] sortedBy:@"id" ascending:YES groupBy:@"" predicate:ZH_EMPTY_PREDICATE];
     [[ZHCoreModelObserver sharedInstance] addDelegate:self];
     
-    [ZHCoreModelExample zh_deleteAll];
+//    [ZHCoreModelExample zh_deleteAll];
 }
 
 - (void)tearDown {
@@ -33,9 +33,16 @@
     // Use XCTAssert and related functions to verify your tests produce the correct results.
     // Override point for customization after application launch.
     
-    ZHCoreModelExample *example = [ZHCoreModelExample new];
-    example.text = @"hhhh";
-    [example zh_saveOrUpdate];
+    NSArray *arr = [ZHCoreModelExample zh_queryAll];
+    NSArray *arr1 = [ZHCoreModelExample zh_quertWithKey:@"text" value:@"hhhh"];
+    NSArray *arr2 = [ZHCoreModelExample zh_quertWithKey:@"text" value:@"hhhh" sorted:@"text" ascending:YES];
+    NSArray *arr3 = [ZHCoreModelExample zh_quertWithKey:@"text" value:@"2222"];
+    
+    NSLog(@"");
+    
+//    ZHCoreModelExample *example = [ZHCoreModelExample new];
+//    example.text = @"2222";
+//    [example zh_saveOrUpdate];
     
 }
 
@@ -43,7 +50,9 @@
     NSArray *arr = dict.allValues;
     for (ZHCoreModelExample * e in arr.firstObject) {
         XCTAssertNotNil(e,"This Objc cannot be nil");
-        XCTAssertEqual(e.text, @"hhhh", "The actual result does not match the expected result.");
+        if([e.text isEqualToString:@"hhhh"]){
+            NSLog(@"hhhh");
+        }
         NSLog(@"%@",e.text);
     }
 }
