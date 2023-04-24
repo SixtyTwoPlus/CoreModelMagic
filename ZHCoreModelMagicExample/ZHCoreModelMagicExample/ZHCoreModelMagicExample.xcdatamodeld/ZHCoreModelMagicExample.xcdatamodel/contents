@@ -3,5 +3,6 @@
     <entity name="Entity" representedClassName="Entity" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="text" optional="YES" attributeType="String"/>
+        <attribute name="text2" optional="YES" attributeType="String"/>
     </entity>
 </model>

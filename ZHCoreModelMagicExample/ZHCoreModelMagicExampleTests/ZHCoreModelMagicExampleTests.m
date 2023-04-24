@@ -21,7 +21,7 @@
     [[ZHCoreModelObserver sharedInstance] setresultControllerWith:@[ZHCoreModelExample.class] sortedBy:@"id" ascending:YES groupBy:@"" predicate:ZH_EMPTY_PREDICATE];
     [[ZHCoreModelObserver sharedInstance] addDelegate:self];
     
-//    [ZHCoreModelExample zh_deleteAll];
+    [ZHCoreModelExample zh_deleteAll];
 }
 
 - (void)tearDown {
@@ -32,14 +32,16 @@
     // This is an example of a functional test case.
     // Use XCTAssert and related functions to verify your tests produce the correct results.
     // Override point for customization after application launch.
-    
+    NSArray *arr3 = @[@"A",@"B",@"C",@"D",@"E",@"F",@"G",@"H",@"I",@"J"];
+    for (int i = 0 ; i < 10; i ++) {
+        ZHCoreModelExample *example = [ZHCoreModelExample new];
+        example.text2 = @"1";
+        example.text = arr3[i];
+        [example zh_saveOrUpdate];
+    }
     NSArray *arr = [ZHCoreModelExample zh_queryAll];
-    NSArray *arr1 = [ZHCoreModelExample zh_quertWithKey:@"text" value:@"hhhh"];
-    NSArray *arr2 = [ZHCoreModelExample zh_quertWithKey:@"text" value:@"hhhh" sorted:@"text" ascending:YES];
-    NSArray *arr3 = [ZHCoreModelExample zh_quertWithKey:@"text" value:@"2222"];
-    
-    NSLog(@"");
-    
+//    NSArray *arr2 = [ZHCoreModelExample zh_queryAllWithPredicate:ZH_EMPTY_PREDICATE sorted:@"text" ascending:YES];
+    NSArray *arr2 = [ZHCoreModelExample zh_quertWithKey:@"text2" value:@"1" sorted:@"text" ascending:NO];
 //    ZHCoreModelExample *example = [ZHCoreModelExample new];
 //    example.text = @"2222";
 //    [example zh_saveOrUpdate];

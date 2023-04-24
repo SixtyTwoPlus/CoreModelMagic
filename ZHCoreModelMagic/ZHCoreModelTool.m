@@ -135,12 +135,32 @@
     
     NSUInteger argumentIndex = 2;
     for (Class argumentType in argumentTypes) {
-        [invocation setArgument:&argumentType atIndex:argumentIndex];
+        if([argumentType isKindOfClass:NSNumber.class]){
+            NSNumber *value = (NSNumber *)argumentType;
+            [self processValue:value invocation:invocation index:argumentIndex];
+        }else{
+            [invocation setArgument:&argumentType atIndex:argumentIndex];
+        }
         argumentIndex++;
     }
     
     [invocation invoke];
     [invocation getReturnValue:resultValue];
+}
+
++ (void)processValue:(NSNumber *)value invocation:(NSInvocation *)invocation index:(NSInteger)index{
+    const char * argumentType = [value objCType];
+    if (strcmp(argumentType, @encode(float)) == 0) {
+        CGFloat floatValue = [value floatValue];
+        [invocation setArgument:&floatValue atIndex:index];
+    } else if (strcmp(argumentType, @encode(NSInteger)) == 0) {
+        NSInteger integerValue = [value integerValue];
+        [invocation setArgument:&integerValue atIndex:index];
+    } else if (strcmp(argumentType, @encode(char)) == 0) {
+        BOOL boolValue = [value boolValue];
+        [invocation setArgument:&boolValue atIndex:index];
+    }
+    return;
 }
 
 @end
