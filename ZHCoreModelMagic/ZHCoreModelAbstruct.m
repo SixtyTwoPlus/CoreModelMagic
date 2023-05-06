@@ -44,12 +44,19 @@ if(![ZHCoreModelObserver sharedInstance].setuped){\
 }
 
 - (void)zh_asyncSaveOrUpdate{
+    [self zh_asyncSaveOrUpdateWithComplete:nil];
+}
+
+- (void)zh_asyncSaveOrUpdateWithComplete:(dispatch_block_t)complete{
     WEAK_SELF
     dispatch_async_and_wait([ZHCoreModelAbstruct serialQueue], ^{
         NSManagedObjectContext *context = [ZHCoreModelAbstruct context];
         NSManagedObject *obj = [weakSelf getOrCreateObjectWithContext:context];
         [weakSelf zh_packageEntityData:obj];
         [context MR_saveToPersistentStoreAndWait];
+        if(complete){
+            complete();
+        }
     });
 }
 

@@ -22,6 +22,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)zh_asyncSaveOrUpdate;
 
+- (void)zh_asyncSaveOrUpdateWithComplete:(dispatch_block_t _Nullable)complete;
+
 @end
 
 NS_ASSUME_NONNULL_END
