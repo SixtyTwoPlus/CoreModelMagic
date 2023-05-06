@@ -39,4 +39,17 @@ return sharedInstance;\
 
 #define ZH_OBJC_SUBCLASSING_RESTRICTED __attribute__((objc_subclassing_restricted))
 
+#pragma mark - other
+
+#define WEAK_SELF __weak typeof(self)weakSelf = self;
+
+#pragma mark - 调试
+#ifdef DEBUG
+// 定义是输出Log
+#define ZHLog(format, ...) NSLog(@"Line[%d] %s " format, __LINE__, __PRETTY_FUNCTION__, ##__VA_ARGS__)
+#else
+// 定义是输出Log
+#define ZHLog(format, ...)
+#endif
+
 #endif /* ZHCoreModelMacroTool_h */

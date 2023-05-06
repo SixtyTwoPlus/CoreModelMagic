@@ -39,12 +39,6 @@
         example.text = arr3[i];
         [example zh_saveOrUpdate];
     }
-    NSArray *arr = [ZHCoreModelExample zh_queryAll];
-//    NSArray *arr2 = [ZHCoreModelExample zh_queryAllWithPredicate:ZH_EMPTY_PREDICATE sorted:@"text" ascending:YES];
-    NSArray *arr2 = [ZHCoreModelExample zh_quertWithKey:@"text2" value:@"1" sorted:@"text" ascending:NO];
-//    ZHCoreModelExample *example = [ZHCoreModelExample new];
-//    example.text = @"2222";
-//    [example zh_saveOrUpdate];
     
 }
 

@@ -43,6 +43,16 @@ if(![ZHCoreModelObserver sharedInstance].setuped){\
     [context MR_saveToPersistentStoreAndWait];
 }
 
+- (void)zh_asyncSaveOrUpdate{
+    WEAK_SELF
+    dispatch_async_and_wait([ZHCoreModelAbstruct serialQueue], ^{
+        NSManagedObjectContext *context = [ZHCoreModelAbstruct context];
+        NSManagedObject *obj = [weakSelf getOrCreateObjectWithContext:context];
+        [weakSelf zh_packageEntityData:obj];
+        [context MR_saveToPersistentStoreAndWait];
+    });
+}
+
 #pragma mark - getter
 
 - (NSString *)identifier{
@@ -146,6 +156,15 @@ if(![ZHCoreModelObserver sharedInstance].setuped){\
 }
 
 #pragma mark - private method
+
++ (dispatch_queue_t)serialQueue{
+    static dispatch_queue_t queue;
+    static dispatch_once_t oneceToken;
+    dispatch_once(&oneceToken, ^{
+        queue = dispatch_queue_create("com.SixtyTwoPlus.ZHCoreModelMagic.SerialQueue", DISPATCH_QUEUE_SERIAL);
+    });
+    return queue;
+}
 
 - (NSManagedObject *)getOrCreateObjectWithContext:(NSManagedObjectContext *)context{
     __autoreleasing NSManagedObject *obj;
