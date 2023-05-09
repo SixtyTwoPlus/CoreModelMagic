@@ -184,7 +184,7 @@ if(![ZHCoreModelObserver sharedInstance].setuped){\
 }
 
 + (NSManagedObjectContext *)context{
-    NSManagedObjectContext *context = [NSManagedObjectContext MR_defaultContext];
+    NSManagedObjectContext *context = [NSManagedObjectContext MR_context];
     return context;
 }
 

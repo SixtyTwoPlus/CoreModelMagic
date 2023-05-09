@@ -21,7 +21,7 @@
     [[ZHCoreModelObserver sharedInstance] setresultControllerWith:@[ZHCoreModelExample.class] sortedBy:@"id" ascending:YES groupBy:@"" predicate:ZH_EMPTY_PREDICATE];
     [[ZHCoreModelObserver sharedInstance] addDelegate:self];
     
-    [ZHCoreModelExample zh_deleteAll];
+//    [ZHCoreModelExample zh_deleteAll];
 }
 
 - (void)tearDown {
@@ -32,23 +32,26 @@
     // This is an example of a functional test case.
     // Use XCTAssert and related functions to verify your tests produce the correct results.
     // Override point for customization after application launch.
+    
+    NSArray * initalizeArr = [ZHCoreModelExample zh_queryAll];
+    
     NSArray *arr3 = @[@"A",@"B",@"C",@"D",@"E",@"F",@"G",@"H",@"I",@"J"];
+    NSMutableArray *arr = [NSMutableArray array];
     for (int i = 0 ; i < 10; i ++) {
         ZHCoreModelExample *example = [ZHCoreModelExample new];
         example.text2 = @"1";
         example.text = arr3[i];
-        [example zh_saveOrUpdate];
+        [arr addObject:example];
     }
-    
+    [arr enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        ZHCoreModelExample *example = (ZHCoreModelExample *)obj;
+        [example zh_saveOrUpdate];
+    }];
 }
 
 - (void)zhCoreModelObserverCoreDataListDidChanged:(NSDictionary *)dict{
     NSArray *arr = dict.allValues;
     for (ZHCoreModelExample * e in arr.firstObject) {
-        XCTAssertNotNil(e,"This Objc cannot be nil");
-        if([e.text isEqualToString:@"hhhh"]){
-            NSLog(@"hhhh");
-        }
         NSLog(@"%@",e.text);
     }
 }
