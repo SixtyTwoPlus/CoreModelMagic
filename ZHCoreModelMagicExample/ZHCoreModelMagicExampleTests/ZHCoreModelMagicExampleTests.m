@@ -43,10 +43,8 @@
         example.text = arr3[i];
         [arr addObject:example];
     }
-    [arr enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        ZHCoreModelExample *example = (ZHCoreModelExample *)obj;
-        [example zh_saveOrUpdate];
-    }];
+    [arr makeObjectsPerformSelector:@selector(zh_saveOrUpdate)];
+    
 }
 
 - (void)zhCoreModelObserverCoreDataListDidChanged:(NSDictionary *)dict{

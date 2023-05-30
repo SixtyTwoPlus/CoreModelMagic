@@ -17,6 +17,8 @@ if(![ZHCoreModelObserver sharedInstance].setuped){\
     NSAssert(NO, @"Default context is nil! Did you forget to initialize the Core Data Stack?");\
 }
 
+#define WEAK_SELF __weak typeof(self)weakSelf = self;
+
 @implementation ZHCoreModelAbstruct
 
 - (instancetype)init
@@ -37,10 +39,7 @@ if(![ZHCoreModelObserver sharedInstance].setuped){\
 
 - (void)zh_saveOrUpdate{
     FORGETINIT
-    NSManagedObjectContext *context = [ZHCoreModelAbstruct context];
-    NSManagedObject *obj = [self getOrCreateObjectWithContext:context];
-    [self zh_packageEntityData:obj];
-    [context MR_saveToPersistentStoreAndWait];
+    [self zh_asyncSaveOrUpdate];
 }
 
 - (void)zh_asyncSaveOrUpdate{
@@ -74,16 +73,6 @@ if(![ZHCoreModelObserver sharedInstance].setuped){\
         _createDate = [NSDate date];
     }
     return _createDate;
-}
-
-#pragma mark - override
-
-+ (BOOL)resolveInstanceMethod:(SEL)sel{
-    NSString *methodName = NSStringFromSelector(sel);
-    if([[self connotResolveMethods] containsObject:methodName]){
-        return NO;
-    }
-    return [super resolveInstanceMethod:sel];
 }
 
 #pragma mark - ZHCoreModelActionProtocol
@@ -186,17 +175,6 @@ if(![ZHCoreModelObserver sharedInstance].setuped){\
 + (NSManagedObjectContext *)context{
     NSManagedObjectContext *context = [NSManagedObjectContext MR_context];
     return context;
-}
-
-+ (NSArray *)connotResolveMethods{
-    return @[
-        NSStringFromSelector(@selector(zh_deleteAll)),
-        NSStringFromSelector(@selector(zh_queryAll)),
-        NSStringFromSelector(@selector(zh_queryAllWithPredicate:)),
-        NSStringFromSelector(@selector(zh_deleteWithPredicate:)),
-        NSStringFromSelector(@selector(zh_deleteThisData)),
-        NSStringFromSelector(@selector(zh_saveOrUpdate)),
-    ];
 }
 
 + (NSString *)generatePredicateStrWithKey:(NSString *)key value:(id)value{
