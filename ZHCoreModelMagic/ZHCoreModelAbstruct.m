@@ -173,7 +173,11 @@ if(![ZHCoreModelObserver sharedInstance].setuped){\
 }
 
 + (NSManagedObjectContext *)context{
-    NSManagedObjectContext *context = [NSManagedObjectContext MR_context];
+    static NSManagedObjectContext *context;
+    static dispatch_once_t oneceToken;
+    dispatch_once(&oneceToken, ^{
+        context = [NSManagedObjectContext MR_context];
+    });
     return context;
 }
 
