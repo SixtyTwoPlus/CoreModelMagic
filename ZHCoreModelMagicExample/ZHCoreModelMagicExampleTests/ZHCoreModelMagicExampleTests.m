@@ -9,7 +9,7 @@
 #import "ZHCoreModelMagic.h"
 #import "ZHCoreModelExample.h"
 
-@interface ZHCoreModelMagicExampleTests : XCTestCase <ZHCoreModelObserverDelegate>
+@interface ZHCoreModelMagicExampleTests : XCTestCase
 
 @end
 
@@ -17,9 +17,6 @@
 
 - (void)setUp {
     // Put setup code here. This method is called before the invocation of each test method in the class.
-    [ZHCoreModelObserver setupCoreDataWithName:@"ZHCoreModel"];
-    [[ZHCoreModelObserver sharedInstance] setresultControllerWith:@[ZHCoreModelExample.class] sortedBy:@"id" ascending:YES groupBy:@"" predicate:ZH_EMPTY_PREDICATE];
-    [[ZHCoreModelObserver sharedInstance] addDelegate:self];
     
 //    [ZHCoreModelExample zh_deleteAll];
 }
@@ -33,27 +30,7 @@
     // Use XCTAssert and related functions to verify your tests produce the correct results.
     // Override point for customization after application launch.
     
-    NSArray * initalizeArr = [ZHCoreModelExample zh_queryAll];
-    
-    NSArray *arr3 = @[@"A",@"B",@"C",@"D",@"E",@"F",@"G",@"H",@"I",@"J"];
-    NSMutableArray *arr = [NSMutableArray array];
-    for (int i = 0 ; i < 10; i ++) {
-        ZHCoreModelExample *example = [ZHCoreModelExample new];
-        example.text2 = @"1";
-        example.text = arr3[i];
-        [arr addObject:example];
-    }
-    [arr makeObjectsPerformSelector:@selector(zh_saveOrUpdate)];
-    
 }
-
-- (void)zhCoreModelObserverCoreDataListDidChanged:(NSDictionary *)dict{
-    NSArray *arr = dict.allValues;
-    for (ZHCoreModelExample * e in arr.firstObject) {
-        NSLog(@"%@",e.text);
-    }
-}
-
 
 - (void)testPerformanceExample {
     // This is an example of a performance test case.

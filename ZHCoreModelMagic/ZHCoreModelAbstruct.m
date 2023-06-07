@@ -19,6 +19,35 @@ if(![ZHCoreModelObserver sharedInstance].setuped){\
 
 #define WEAK_SELF __weak typeof(self)weakSelf = self;
 
+
+@interface ZHCoreModelAbstructContext : NSObject
+
+ZH_SHAREINSTANCE(ZHCoreModelAbstructContext);
+
+@property (nonatomic,readonly) dispatch_queue_t         serialQueue;
+@property (nonatomic,readonly) dispatch_semaphore_t     semaphore;
+@property (nonatomic,readonly) NSManagedObjectContext   *context;
+
+@end
+
+
+@implementation ZHCoreModelAbstructContext
+
+ZH_SHAREINSTANCE_IMPLEMENT(ZHCoreModelAbstructContext)
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _serialQueue = dispatch_queue_create("com.SixtyTwoPlus.ZHCoreModelMagic.SerialQueue", DISPATCH_QUEUE_SERIAL);
+        _semaphore = dispatch_semaphore_create(0);
+        _context = [NSManagedObjectContext MR_context];
+    }
+    return self;
+}
+
+@end
+
 @implementation ZHCoreModelAbstruct
 
 - (instancetype)init
@@ -47,15 +76,17 @@ if(![ZHCoreModelObserver sharedInstance].setuped){\
 }
 
 - (void)zh_asyncSaveOrUpdateWithComplete:(dispatch_block_t)complete{
-    WEAK_SELF
-    dispatch_async_and_wait([ZHCoreModelAbstruct serialQueue], ^{
-        NSManagedObjectContext *context = [ZHCoreModelAbstruct context];
-        NSManagedObject *obj = [weakSelf getOrCreateObjectWithContext:context];
-        [weakSelf zh_packageEntityData:obj];
-        [context MR_saveToPersistentStoreAndWait];
-        if(complete){
-            complete();
-        }
+    NSManagedObjectContext *context = [ZHCoreModelAbstruct context];
+    NSManagedObject *obj = [self getOrCreateObjectWithContext:context];
+    [self zh_packageEntityData:obj];
+    dispatch_async(ZHCoreModelAbstructContext.sharedInstance.serialQueue, ^{
+        [context MR_saveToPersistentStoreWithCompletion:^(BOOL contextDidSave, NSError * _Nullable error) {
+            if(complete){
+                complete();
+            }
+            dispatch_semaphore_signal(ZHCoreModelAbstructContext.sharedInstance.semaphore);
+        }];
+        dispatch_semaphore_wait(ZHCoreModelAbstructContext.sharedInstance.semaphore, DISPATCH_TIME_FOREVER);
     });
 }
 
@@ -153,13 +184,8 @@ if(![ZHCoreModelObserver sharedInstance].setuped){\
 
 #pragma mark - private method
 
-+ (dispatch_queue_t)serialQueue{
-    static dispatch_queue_t queue;
-    static dispatch_once_t oneceToken;
-    dispatch_once(&oneceToken, ^{
-        queue = dispatch_queue_create("com.SixtyTwoPlus.ZHCoreModelMagic.SerialQueue", DISPATCH_QUEUE_SERIAL);
-    });
-    return queue;
++ (NSManagedObjectContext *)context{
+    return [ZHCoreModelAbstructContext sharedInstance].context;
 }
 
 - (NSManagedObject *)getOrCreateObjectWithContext:(NSManagedObjectContext *)context{
@@ -170,15 +196,6 @@ if(![ZHCoreModelObserver sharedInstance].setuped){\
         [ZHCoreModelTool classExecute:entityClass WithSelector:@selector(MR_createEntityInContext:) argumentTypes:@[context] resultValue:&obj];
     }
     return obj;
-}
-
-+ (NSManagedObjectContext *)context{
-    static NSManagedObjectContext *context;
-    static dispatch_once_t oneceToken;
-    dispatch_once(&oneceToken, ^{
-        context = [NSManagedObjectContext MR_context];
-    });
-    return context;
 }
 
 + (NSString *)generatePredicateStrWithKey:(NSString *)key value:(id)value{
