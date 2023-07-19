@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "ZHCoreModelMagic"
-  s.version      = "1.2.0"
+  s.version      = "2.0.0"
   s.summary      = "This is a tool library for binding Coredata with Model operations"
   s.description  = <<-DESC 'ZHCoreModelMagic'
                    DESC
@@ -22,6 +22,8 @@ Pod::Spec.new do |s|
   s.platform     = :ios
 
   s.ios.deployment_target = "9.0"
+
+  s.deprecated   = false
 
   s.source       = { :git => "https://github.com/SixtyTwoPlus/ZHCoreModelMagic.git", :tag => "v#{s.version}" }
 
