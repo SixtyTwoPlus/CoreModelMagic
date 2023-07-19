@@ -5,3 +5,7 @@
 Cocoapods : pod 'ZHCoreModelMagic'
 
 # Get Start
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    //初始化数据库
+    [ZHCoreModelMagic zh_setupCoreDataWithName:@"DataBase"];
+}
