@@ -8,8 +8,8 @@
 #ifndef ZHCoreModelMagic_h
 #define ZHCoreModelMagic_h
 
-#import "ZHCoreModelObserver.h"
-#import "ZHCoreModelAbstruct.h"
 #import "ZHCoreModelMagic.h"
+#import "ZHCoreModelMagicInternal.h"
+#import "ZHCoreModelAbstruct.h"
 
 #endif /* ZHCoreModelMagic_h */

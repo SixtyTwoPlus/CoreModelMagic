@@ -16,11 +16,12 @@
 		4854840529F02AF800004C1E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4854840329F02AF800004C1E /* LaunchScreen.storyboard */; };
 		4854840829F02AF800004C1E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4854840729F02AF800004C1E /* main.m */; };
 		4854841329F0385100004C1E /* ZHCoreModelAbstruct.m in Sources */ = {isa = PBXBuildFile; fileRef = 4854841229F0385100004C1E /* ZHCoreModelAbstruct.m */; };
-		4854841629F0387200004C1E /* ZHCoreModelObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 4854841529F0387200004C1E /* ZHCoreModelObserver.m */; };
 		4854841929F03BB800004C1E /* ZHCoreModelTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 4854841829F03BB800004C1E /* ZHCoreModelTool.m */; };
 		4854841D29F0D27400004C1E /* ZHCoreModelExample.m in Sources */ = {isa = PBXBuildFile; fileRef = 4854841C29F0D27400004C1E /* ZHCoreModelExample.m */; };
 		4854842629F10DB900004C1E /* ZHCoreModelMagicExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4854842529F10DB900004C1E /* ZHCoreModelMagicExampleTests.m */; };
 		4854842C29F10FAB00004C1E /* ZHCoreModelMagicExample.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 485483FE29F02AF700004C1E /* ZHCoreModelMagicExample.xcdatamodeld */; };
+		48DF6B1A2A678DB600B0D5DA /* ZHCoreModelMagicInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = 48DF6B192A678DB600B0D5DA /* ZHCoreModelMagicInternal.m */; };
+		48DF6B1D2A678E1400B0D5DA /* ZHCoreModelObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 48DF6B1C2A678E1400B0D5DA /* ZHCoreModelObserver.m */; };
 		F07E369B3CE2A3B5412C4252 /* Pods_ZHCoreModelMagicExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3889CE95AC51C2E4CE89D629 /* Pods_ZHCoreModelMagicExample.framework */; };
 /* End PBXBuildFile section */
 
@@ -54,8 +55,6 @@
 		4854841029F0381D00004C1E /* ZHCoreModelMagic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZHCoreModelMagic.h; sourceTree = "<group>"; };
 		4854841129F0385100004C1E /* ZHCoreModelAbstruct.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZHCoreModelAbstruct.h; sourceTree = "<group>"; };
 		4854841229F0385100004C1E /* ZHCoreModelAbstruct.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZHCoreModelAbstruct.m; sourceTree = "<group>"; };
-		4854841429F0387200004C1E /* ZHCoreModelObserver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZHCoreModelObserver.h; sourceTree = "<group>"; };
-		4854841529F0387200004C1E /* ZHCoreModelObserver.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZHCoreModelObserver.m; sourceTree = "<group>"; };
 		4854841729F03BB800004C1E /* ZHCoreModelTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZHCoreModelTool.h; sourceTree = "<group>"; };
 		4854841829F03BB800004C1E /* ZHCoreModelTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZHCoreModelTool.m; sourceTree = "<group>"; };
 		4854841A29F03E9E00004C1E /* ZHCoreModelMacroTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZHCoreModelMacroTool.h; sourceTree = "<group>"; };
@@ -63,6 +62,10 @@
 		4854841C29F0D27400004C1E /* ZHCoreModelExample.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZHCoreModelExample.m; sourceTree = "<group>"; };
 		4854842329F10DB900004C1E /* ZHCoreModelMagicExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ZHCoreModelMagicExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4854842529F10DB900004C1E /* ZHCoreModelMagicExampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZHCoreModelMagicExampleTests.m; sourceTree = "<group>"; };
+		48DF6B182A678DB600B0D5DA /* ZHCoreModelMagicInternal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZHCoreModelMagicInternal.h; sourceTree = "<group>"; };
+		48DF6B192A678DB600B0D5DA /* ZHCoreModelMagicInternal.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZHCoreModelMagicInternal.m; sourceTree = "<group>"; };
+		48DF6B1B2A678E1400B0D5DA /* ZHCoreModelObserver.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ZHCoreModelObserver.h; sourceTree = "<group>"; };
+		48DF6B1C2A678E1400B0D5DA /* ZHCoreModelObserver.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ZHCoreModelObserver.m; sourceTree = "<group>"; };
 		897C621054F84BDAB4A826EC /* Pods-ZHCoreModelMagicExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZHCoreModelMagicExample.release.xcconfig"; path = "Target Support Files/Pods-ZHCoreModelMagicExample/Pods-ZHCoreModelMagicExample.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -133,11 +136,13 @@
 				4854840F29F0377800004C1E /* ZHCoreModelActionProtocol.h */,
 				4854841129F0385100004C1E /* ZHCoreModelAbstruct.h */,
 				4854841229F0385100004C1E /* ZHCoreModelAbstruct.m */,
-				4854841429F0387200004C1E /* ZHCoreModelObserver.h */,
-				4854841529F0387200004C1E /* ZHCoreModelObserver.m */,
 				4854841729F03BB800004C1E /* ZHCoreModelTool.h */,
 				4854841829F03BB800004C1E /* ZHCoreModelTool.m */,
 				4854841A29F03E9E00004C1E /* ZHCoreModelMacroTool.h */,
+				48DF6B182A678DB600B0D5DA /* ZHCoreModelMagicInternal.h */,
+				48DF6B192A678DB600B0D5DA /* ZHCoreModelMagicInternal.m */,
+				48DF6B1B2A678E1400B0D5DA /* ZHCoreModelObserver.h */,
+				48DF6B1C2A678E1400B0D5DA /* ZHCoreModelObserver.m */,
 			);
 			name = ZHCoreModelMagic;
 			path = ../../ZHCoreModelMagic;
@@ -323,12 +328,13 @@
 			files = (
 				4854840829F02AF800004C1E /* main.m in Sources */,
 				485483FA29F02AF700004C1E /* ViewController.m in Sources */,
-				4854841629F0387200004C1E /* ZHCoreModelObserver.m in Sources */,
 				4854840029F02AF700004C1E /* ZHCoreModelMagicExample.xcdatamodeld in Sources */,
 				485483F429F02AF700004C1E /* AppDelegate.m in Sources */,
+				48DF6B1A2A678DB600B0D5DA /* ZHCoreModelMagicInternal.m in Sources */,
 				4854841329F0385100004C1E /* ZHCoreModelAbstruct.m in Sources */,
 				4854841929F03BB800004C1E /* ZHCoreModelTool.m in Sources */,
 				4854841D29F0D27400004C1E /* ZHCoreModelExample.m in Sources */,
+				48DF6B1D2A678E1400B0D5DA /* ZHCoreModelObserver.m in Sources */,
 				485483F729F02AF700004C1E /* SceneDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

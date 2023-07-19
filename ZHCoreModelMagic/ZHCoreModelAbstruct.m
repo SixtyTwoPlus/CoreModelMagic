@@ -12,11 +12,6 @@
 #import "ZHCoreModelTool.h"
 #import "ZHCoreModelObserver.h"
 
-#define FORGETINIT \
-if(![ZHCoreModelObserver sharedInstance].setuped){\
-    NSAssert(NO, @"Default context is nil! Did you forget to initialize the Core Data Stack?");\
-}
-
 #define WEAK_SELF __weak typeof(self)weakSelf = self;
 
 
@@ -62,12 +57,10 @@ ZH_SHAREINSTANCE_IMPLEMENT(ZHCoreModelAbstructContext)
 #pragma mark - public method
 
 - (BOOL)zh_deleteThisData{
-    FORGETINIT
     return [self.class zh_deleteWithPredicate:ZH_PREDICATE(@"id = %@",self.identifier)];
 }
 
 - (void)zh_saveOrUpdate{
-    FORGETINIT
     [self zh_asyncSaveOrUpdate];
 }
 
@@ -109,7 +102,6 @@ ZH_SHAREINSTANCE_IMPLEMENT(ZHCoreModelAbstructContext)
 #pragma mark - ZHCoreModelActionProtocol
 
 + (BOOL)zh_deleteAll{
-    FORGETINIT
     return [self zh_deleteWithPredicate:ZH_EMPTY_PREDICATE];
 }
 
@@ -118,7 +110,6 @@ ZH_SHAREINSTANCE_IMPLEMENT(ZHCoreModelAbstructContext)
 }
 
 + (NSArray *)zh_queryAll{
-    FORGETINIT
     return [self zh_queryAllWithPredicate:ZH_EMPTY_PREDICATE];
 }
 
@@ -131,14 +122,12 @@ ZH_SHAREINSTANCE_IMPLEMENT(ZHCoreModelAbstructContext)
 }
 
 + (NSArray *)zh_queryAllWithPredicate:(NSPredicate *)predicate{
-    FORGETINIT
     return [self zh_queryAllWithPredicate:predicate sorted:nil ascending:NO];
 }
 
 #pragma mark - core method
 
 + (BOOL)zh_deleteWithPredicate:(NSPredicate *)predicate{
-    FORGETINIT
     BOOL result = NO;
     NSManagedObjectContext *context = [self context];
     [ZHCoreModelTool classExecute:[self zh_coreDataEntity] WithSelector:@selector(MR_deleteAllMatchingPredicate:inContext:) argumentTypes:@[predicate,context] resultValue:&result];
@@ -147,7 +136,6 @@ ZH_SHAREINSTANCE_IMPLEMENT(ZHCoreModelAbstructContext)
 }
 
 + (NSArray *)zh_queryAllWithPredicate:(NSPredicate *)predicate sorted:(NSString *)sorted ascending:(BOOL)ascending{
-    FORGETINIT
     __autoreleasing NSArray *results;
     BOOL needSort = ![ZHCoreModelTool zh_isStrNull:sorted];
     NSArray *arr = @[predicate,[self context]];

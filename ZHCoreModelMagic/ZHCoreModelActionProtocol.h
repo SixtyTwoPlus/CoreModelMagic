@@ -42,4 +42,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+@protocol ZHCoreModelMagicObsDelegate <NSObject>
+
+@optional
+- (void)zh_coreModelObserverCoreDataListDidChanged:(NSArray *)array;
+
+- (void)zh_coreModelObserverCoreDataDidChangeObject:(id)object atIndexPath:(NSIndexPath *)indexPath changeType:(NSFetchedResultsChangeType)changeType newIndexPath:(NSIndexPath *)newIndexPath;
+
+- (void)zh_coreModelObserverCoreDataDidChangeSection:(id<NSFetchedResultsSectionInfo>)sectionInfo atIndex:(NSUInteger)sectionIndex forChangeType:(NSFetchedResultsChangeType)type;
+
+@end
+
 NS_ASSUME_NONNULL_END

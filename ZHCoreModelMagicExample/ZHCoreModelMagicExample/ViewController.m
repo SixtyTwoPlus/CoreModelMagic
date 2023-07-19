@@ -9,7 +9,7 @@
 #import "ZHCoreModelExample.h"
 #import "ZHCoreModelMagic.h"
 
-@interface ViewController ()<ZHCoreModelObserverDelegate>
+@interface ViewController ()<ZHCoreModelMagicObsDelegate>
 
 @end
 
@@ -19,12 +19,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view
     
-    [ZHCoreModelObserver setupCoreDataWithName:@"ZHCoreModel"];
-    [[ZHCoreModelObserver sharedInstance] setresultControllerWith:@[ZHCoreModelExample.class] sortedBy:@"id" ascending:YES groupBy:@"" predicate:ZH_EMPTY_PREDICATE];
-    [[ZHCoreModelObserver sharedInstance] addDelegate:self];
+    [ZHCoreModelMagic zh_setupCoreDataWithName:@"hhh"];
     
+    [ZHCoreModelExample zh_deleteAll];
     
-    NSArray * initalizeArr = [ZHCoreModelExample zh_queryAll];
+    [ZHCoreModelMagic zh_setupCoreDataNotifyWith:ZHCoreModelExample.class sortedBy:@"text" ascending:YES groupBy:nil predicate:[NSPredicate predicateWithValue:YES] delegate:self];
     
     NSArray *arr3 = @[@"A",@"B",@"C",@"D",@"E",@"F",@"G",@"H",@"I",@"J"];
     NSMutableArray *arr = [NSMutableArray array];
@@ -37,10 +36,16 @@
     [arr makeObjectsPerformSelector:@selector(zh_saveOrUpdate)];
 }
 
-- (void)zhCoreModelObserverCoreDataListDidChanged:(NSDictionary *)dict{
-    NSArray *arr = dict.allValues;
-    for (ZHCoreModelExample * e in arr.firstObject) {
-        NSLog(@"%@",e.text);
-    }
+- (void)zh_coreModelObserverCoreDataDidChangeObject:(id)object atIndexPath:(NSIndexPath *)indexPath changeType:(NSFetchedResultsChangeType)changeType newIndexPath:(NSIndexPath *)newIndexPath{
+    
+    
+    NSLog(@"");
 }
+
+- (void)zh_coreModelObserverCoreDataListDidChanged:(NSArray *)array{
+    
+    NSLog(@"");
+    
+}
+
 @end
