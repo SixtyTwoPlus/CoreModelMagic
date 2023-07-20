@@ -187,7 +187,21 @@ ZH_SHAREINSTANCE_IMPLEMENT(ZHCoreModelAbstructContext)
 }
 
 + (NSString *)generatePredicateStrWithKey:(NSString *)key value:(id)value{
-    return [NSString stringWithFormat:@"%@ = '%@'",key,value];
+    if([value isKindOfClass:NSArray.class] || [value isKindOfClass:NSDictionary.class] || [value isKindOfClass:NSSet.class]){
+        NSAssert(NO, @"Value cannot be container objects");
+        return nil;
+    }
+    if([value isKindOfClass:NSString.class]){
+        return [NSString stringWithFormat:@"%@ = '%@'",key,value];
+    }
+    NSNumber *num = (NSNumber *)value;
+    if (num.integerValue != num.floatValue) {
+        CGFloat f = num.floatValue;
+        return [NSString stringWithFormat:@"%@ = %f",key,f];
+    } else {
+        NSInteger i = num.integerValue;
+        return [NSString stringWithFormat:@"%@ = %ld",key,i];
+    }
 }
 
 @end
