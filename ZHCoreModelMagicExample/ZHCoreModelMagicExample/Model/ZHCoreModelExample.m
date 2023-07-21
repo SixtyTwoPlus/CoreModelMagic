@@ -20,7 +20,7 @@
         Entity *entity = (Entity *)objc;
         entity.text = self.text;
         entity.id = self.identifier;
-        entity.text2 = self.text2;
+        entity.count = self.count;
     }
 }
 
@@ -30,7 +30,7 @@
         Entity *entity = (Entity *)objc;
         example.text = entity.text;
         example.identifier = entity.id;
-        example.text2 = entity.text2;
+        example.count = entity.count;
     }
     return example;
 }

@@ -29,11 +29,15 @@
     NSMutableArray *arr = [NSMutableArray array];
     for (int i = 0 ; i < 10; i ++) {
         ZHCoreModelExample *example = [ZHCoreModelExample new];
-        example.text2 = @"1";
         example.text = arr3[i];
+        example.count = i;
         [arr addObject:example];
     }
     [arr makeObjectsPerformSelector:@selector(zh_saveOrUpdate)];
+    
+    NSArray * a =  [ZHCoreModelExample zh_quertWithKey:@"count" value:@(5)];
+    NSLog(@"");
+    
 }
 
 - (void)zh_coreModelObserverCoreDataDidChangeObject:(id)object atIndexPath:(NSIndexPath *)indexPath changeType:(NSFetchedResultsChangeType)changeType newIndexPath:(NSIndexPath *)newIndexPath{
