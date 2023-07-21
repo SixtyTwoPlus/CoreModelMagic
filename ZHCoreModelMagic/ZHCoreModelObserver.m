@@ -120,13 +120,18 @@ ZH_SHAREINSTANCE_IMPLEMENT(ZHCoreModelObserver)
 }
 
 - (void)controllerDidChangeContent:(NSFetchedResultsController *)controller{
-    
-    NSArray *fetchedObjects = [controller fetchedObjects];
-    NSString *entiClsName = NSStringFromClass([fetchedObjects.firstObject class]);
-    
-    NSDictionary *dict = self.controllers[entiClsName];
-    NSArray * delegateNames = dict[CONTROLLER_DELEGATES_KEY];
-    Class modelClass = NSClassFromString(dict[CONTROLLER_MODEL_KEY]);
+    NSDictionary *value;
+    for (NSDictionary *dict in self.controllers.allValues) {
+        if(dict[CONTROLLER_KEY] == controller){
+            value = dict;
+            break;
+        }
+    }
+    if(!value){
+        return;
+    }
+    NSArray * delegateNames = value[CONTROLLER_DELEGATES_KEY];
+    Class modelClass = NSClassFromString(value[CONTROLLER_MODEL_KEY]);
     
     for (id <ZHCoreModelMagicObsDelegate> delegate in self.delegates) {
         NSString * itemClsName = NSStringFromClass(delegate.class);
@@ -135,7 +140,7 @@ ZH_SHAREINSTANCE_IMPLEMENT(ZHCoreModelObserver)
             continue;
         }
         NSMutableArray *mutableArr = [NSMutableArray array];
-        for (NSManagedObject * obj in fetchedObjects) {
+        for (NSManagedObject * obj in controller.fetchedObjects) {
             id modelObj = [modelClass performSelector:@selector(zh_reversePackagingWithEntityData:) withObject:obj];
             [mutableArr addObject:modelObj];
         }
