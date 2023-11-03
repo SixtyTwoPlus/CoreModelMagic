@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "ZHCoreModelMagic"
-  s.version      = "2.0.1"
+  s.version      = "2.0.2"
   s.summary      = "This is a tool library for binding Coredata with Model operations"
   s.description  = <<-DESC 'ZHCoreModelMagic'
                    DESC

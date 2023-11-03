@@ -8,7 +8,7 @@
 #import "ZHCoreModelObserver.h"
 #import "ZHCoreModelAbstruct.h"
 #import "ZHCoreModelTool.h"
-@import MagicalRecord;
+#import <MagicalRecord/MagicalRecord.h>
 
 #define CONTROLLER_DELEGATES_KEY @"delegates"
 #define CONTROLLER_KEY @"controller"

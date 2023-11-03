@@ -7,7 +7,7 @@
 
 #import "ZHCoreModelMagicInternal.h"
 #import "ZHCoreModelObserver.h"
-@import MagicalRecord;
+#import <MagicalRecord/MagicalRecord.h>
 
 @implementation ZHCoreModelMagic
 
