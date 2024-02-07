@@ -19,7 +19,7 @@
     if([objc isKindOfClass:Entity.class]){
         Entity *entity = (Entity *)objc;
         entity.text = self.text;
-        entity.id = self.identifier;
+        entity.id = self.id;
         entity.count = self.count;
     }
 }
@@ -29,7 +29,7 @@
     if([objc isKindOfClass:Entity.class]){
         Entity *entity = (Entity *)objc;
         example.text = entity.text;
-        example.identifier = entity.id;
+        example.id = entity.id;
         example.count = entity.count;
     }
     return example;

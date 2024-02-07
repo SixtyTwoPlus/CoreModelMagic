@@ -57,7 +57,7 @@ ZH_SHAREINSTANCE_IMPLEMENT(ZHCoreModelAbstructContext)
 #pragma mark - public method
 
 - (BOOL)zh_deleteThisData{
-    return [self.class zh_deleteWithPredicate:ZH_PREDICATE(@"id = %@",self.identifier)];
+    return [self.class zh_deleteWithPredicate:ZH_PREDICATE(@"id = %@",self.id)];
 }
 
 - (void)zh_saveOrUpdate{
@@ -85,11 +85,11 @@ ZH_SHAREINSTANCE_IMPLEMENT(ZHCoreModelAbstructContext)
 
 #pragma mark - getter
 
-- (NSString *)identifier{
-    if([ZHCoreModelTool zh_isStrNull:_identifier]){
-        _identifier = [[NSUUID UUID] UUIDString];
+- (NSString *)id{
+    if([ZHCoreModelTool zh_isStrNull:_id]){
+        _id = [[NSUUID UUID] UUIDString];
     }
-    return _identifier;
+    return _id;
 }
 
 - (NSDate *)createDate{
@@ -179,7 +179,7 @@ ZH_SHAREINSTANCE_IMPLEMENT(ZHCoreModelAbstructContext)
 - (NSManagedObject *)getOrCreateObjectWithContext:(NSManagedObjectContext *)context{
     __autoreleasing NSManagedObject *obj;
     Class entityClass = [self.class zh_coreDataEntity];
-    [ZHCoreModelTool classExecute:entityClass WithSelector:@selector(MR_findFirstWithPredicate:inContext:) argumentTypes:@[ZH_PREDICATE(@"id = %@",self.identifier),context] resultValue:&obj];
+    [ZHCoreModelTool classExecute:entityClass WithSelector:@selector(MR_findFirstWithPredicate:inContext:) argumentTypes:@[ZH_PREDICATE(@"id = %@",self.id),context] resultValue:&obj];
     if(!obj){
         [ZHCoreModelTool classExecute:entityClass WithSelector:@selector(MR_createEntityInContext:) argumentTypes:@[context] resultValue:&obj];
     }
