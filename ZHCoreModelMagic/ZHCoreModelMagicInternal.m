@@ -15,6 +15,10 @@
     [MagicalRecord setupCoreDataStackWithStoreNamed:name];
 }
 
++ (void)zh_setupCoreDataWithAutoMigratingSqliteName:(NSString *)name{
+    [MagicalRecord setupCoreDataStackWithAutoMigratingSqliteStoreNamed:name];
+}
+
 + (void)zh_setupCoreDataNotifyWith:(Class)modelClass sortedBy:(NSString *)sortedBy ascending:(BOOL)ascending groupBy:(NSString *)groupBy predicate:(NSPredicate *)predicate delegate:(id<ZHCoreModelMagicObsDelegate>)delegate{
     [[ZHCoreModelObserver sharedInstance] obsSetupCoreDataNotifyWith:modelClass sortedBy:sortedBy ascending:ascending groupBy:groupBy predicate:predicate delegate:delegate];
 }

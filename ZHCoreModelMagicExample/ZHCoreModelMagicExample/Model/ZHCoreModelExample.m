@@ -14,26 +14,16 @@
     return Entity.class;
 }
 
+//- (NSArray *)zh_coreDataStoreKeys{
+//    return @[@"id",@"text",@"count"];
+//}
 
-- (void)zh_packageEntityData:(NSManagedObject *)objc{
-    if([objc isKindOfClass:Entity.class]){
-        Entity *entity = (Entity *)objc;
-        entity.text = self.text;
-        entity.id = self.id;
-        entity.count = self.count;
-    }
+- (NSDictionary *)zh_coreDataStoreCustomKeys{
+    return @{
+        @"id" : @"id",
+        @"content" : @"text",
+        @"count" : @"count",
+    };
 }
-
-+ (instancetype)zh_reversePackagingWithEntityData:(NSManagedObject *)objc{
-    ZHCoreModelExample *example = [ZHCoreModelExample new];
-    if([objc isKindOfClass:Entity.class]){
-        Entity *entity = (Entity *)objc;
-        example.text = entity.text;
-        example.id = entity.id;
-        example.count = entity.count;
-    }
-    return example;
-}
-
 
 @end

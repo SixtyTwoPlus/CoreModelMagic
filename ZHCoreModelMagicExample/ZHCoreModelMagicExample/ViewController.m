@@ -21,6 +21,8 @@
     
     [ZHCoreModelMagic zh_setupCoreDataWithName:@"hhh"];
     
+    NSArray * ab = [ZHCoreModelExample zh_queryAll];
+    
     [ZHCoreModelExample zh_deleteAll];
     
     [ZHCoreModelMagic zh_setupCoreDataNotifyWith:ZHCoreModelExample.class sortedBy:@"text" ascending:YES groupBy:nil predicate:[NSPredicate predicateWithValue:YES] delegate:self];
@@ -29,7 +31,7 @@
     NSMutableArray *arr = [NSMutableArray array];
     for (int i = 0 ; i < 10; i ++) {
         ZHCoreModelExample *example = [ZHCoreModelExample new];
-        example.text = arr3[i];
+        example.content = arr3[i];
         example.count = i;
         [arr addObject:example];
     }

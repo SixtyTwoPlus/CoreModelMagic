@@ -51,6 +51,9 @@ ZH_SHAREINSTANCE_IMPLEMENT(ZHCoreModelAbstructContext)
     if (self && [self isMemberOfClass:ZHCoreModelAbstruct.class]) {
         ZH_INIT_EXCEPTION;
     }
+    if (![self conformsToProtocol:@protocol(ZHCoreModelProviderProtocol)]){
+        [NSException raise:NSInternalInconsistencyException format:@"You must conforms to ZHCoreModelProviderProtocol"];
+    }
     return self;
 }
 
@@ -70,17 +73,37 @@ ZH_SHAREINSTANCE_IMPLEMENT(ZHCoreModelAbstructContext)
 
 - (void)zh_asyncSaveOrUpdateWithComplete:(dispatch_block_t)complete{
     NSManagedObjectContext *context = [ZHCoreModelAbstruct context];
+    
+    dispatch_block_t saveBlock = ^{
+        dispatch_async(ZHCoreModelAbstructContext.sharedInstance.serialQueue, ^{
+            [context MR_saveToPersistentStoreWithCompletion:^(BOOL contextDidSave, NSError * _Nullable error) {
+                if(complete){
+                    complete();
+                }
+                dispatch_semaphore_signal(ZHCoreModelAbstructContext.sharedInstance.semaphore);
+            }];
+            dispatch_semaphore_wait(ZHCoreModelAbstructContext.sharedInstance.semaphore, DISPATCH_TIME_FOREVER);
+        });
+    };
+    
     NSManagedObject *obj = [self getOrCreateObjectWithContext:context];
-    [self zh_packageEntityData:obj];
-    dispatch_async(ZHCoreModelAbstructContext.sharedInstance.serialQueue, ^{
-        [context MR_saveToPersistentStoreWithCompletion:^(BOOL contextDidSave, NSError * _Nullable error) {
-            if(complete){
-                complete();
-            }
-            dispatch_semaphore_signal(ZHCoreModelAbstructContext.sharedInstance.semaphore);
+    if ([self respondsToSelector:@selector(zh_coreDataStoreKeys)]) {
+        NSArray *keys = [self performSelector:@selector(zh_coreDataStoreKeys)];
+        NSDictionary *valueKeys = [self dictionaryWithValuesForKeys:keys];
+        for (NSString *key in keys) {
+            [obj setValue:valueKeys[key] forKey:key];
+        }
+        saveBlock();
+        return;
+    }
+    if ([self respondsToSelector:@selector(zh_coreDataStoreCustomKeys)]) {
+        NSDictionary *dict = [self performSelector:@selector(zh_coreDataStoreCustomKeys)];
+        NSDictionary *valueKeys = [self dictionaryWithValuesForKeys:dict.allKeys];
+        [dict enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull value, BOOL * _Nonnull stop) {
+            [obj setValue:valueKeys[key] forKey:value];
         }];
-        dispatch_semaphore_wait(ZHCoreModelAbstructContext.sharedInstance.semaphore, DISPATCH_TIME_FOREVER);
-    });
+        saveBlock();
+    }
 }
 
 #pragma mark - getter
@@ -130,7 +153,8 @@ ZH_SHAREINSTANCE_IMPLEMENT(ZHCoreModelAbstructContext)
 + (BOOL)zh_deleteWithPredicate:(NSPredicate *)predicate{
     BOOL result = NO;
     NSManagedObjectContext *context = [self context];
-    [ZHCoreModelTool classExecute:[self zh_coreDataEntity] WithSelector:@selector(MR_deleteAllMatchingPredicate:inContext:) argumentTypes:@[predicate,context] resultValue:&result];
+    Class cls = [self performSelector:@selector(zh_coreDataEntity)];
+    [ZHCoreModelTool classExecute:cls WithSelector:@selector(MR_deleteAllMatchingPredicate:inContext:) argumentTypes:@[predicate,context] resultValue:&result];
     [context MR_saveToPersistentStoreAndWait];
     return result;
 }
@@ -145,7 +169,8 @@ ZH_SHAREINSTANCE_IMPLEMENT(ZHCoreModelAbstructContext)
         method = @selector(MR_findAllSortedBy:ascending:withPredicate:inContext:);
         arr = [@[sorted,@(ascending)] arrayByAddingObjectsFromArray:arr];
     }
-    [ZHCoreModelTool classExecute:[self zh_coreDataEntity] WithSelector:method argumentTypes:arr resultValue:&results];
+    Class cls = [self performSelector:@selector(zh_coreDataEntity)];
+    [ZHCoreModelTool classExecute:cls WithSelector:method argumentTypes:arr resultValue:&results];
     NSMutableArray *repackagineArray = [NSMutableArray array];
     for (NSManagedObject *obj in results) {
         id model = [self zh_reversePackagingWithEntityData:obj];
@@ -154,20 +179,22 @@ ZH_SHAREINSTANCE_IMPLEMENT(ZHCoreModelAbstructContext)
     return repackagineArray;
 }
 
-#pragma mark - ZHCoreModelProviderProtocol
-
-+ (Class)zh_coreDataEntity{
-    ZH_OVERRIDE_EXCEPTION
-    return NULL;
-}
-
-- (void)zh_packageEntityData:(NSManagedObject *)objc{
-    ZH_OVERRIDE_EXCEPTION
-}
-
-+ (instancetype)zh_reversePackagingWithEntityData:(NSManagedObject *)objc{
-    ZH_OVERRIDE_EXCEPTION
-    return nil;
++ (instancetype)zh_reversePackagingWithEntityData:(NSManagedObject *)obj{
+    id model = [[self alloc]init];
+    if ([model respondsToSelector:@selector(zh_coreDataStoreKeys)]) {
+        NSArray *keys = [model performSelector:@selector(zh_coreDataStoreKeys)];
+        for (NSString *key in keys) {
+            [model setValue:[obj valueForKey:key] forKey:key];
+        }
+        return model;
+    }
+    if ([model respondsToSelector:@selector(zh_coreDataStoreCustomKeys)]) {
+        NSDictionary *dict = [model performSelector:@selector(zh_coreDataStoreCustomKeys)];
+        [dict enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull value, BOOL * _Nonnull stop) {
+            [model setValue:[obj valueForKey:value] forKey:key];
+        }];
+    }
+    return model;
 }
 
 #pragma mark - private method

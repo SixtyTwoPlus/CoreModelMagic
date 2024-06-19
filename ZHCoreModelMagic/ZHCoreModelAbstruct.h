@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface ZHCoreModelAbstruct : NSObject <ZHCoreModelActionProtocol,ZHCoreModelProviderProtocol>
+@interface ZHCoreModelAbstruct : NSObject <ZHCoreModelActionProtocol>
 
 @property (nonatomic,copy) NSString *id;
 @property (nonatomic,copy) NSDate   *createDate;

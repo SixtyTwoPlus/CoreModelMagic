@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)zh_setupCoreDataWithName:(NSString *)name;
 
++ (void)zh_setupCoreDataWithAutoMigratingSqliteName:(NSString *)name;
+
 #pragma mark - obs
 
 + (void)zh_setupCoreDataNotifyWith:(Class)modelClass sortedBy:(NSString *)sortedBy ascending:(BOOL)ascending groupBy:(NSString * _Nullable)groupBy predicate:(NSPredicate *)predicate delegate:(id <ZHCoreModelMagicObsDelegate>)delegate;

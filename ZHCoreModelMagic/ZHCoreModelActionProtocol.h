@@ -30,15 +30,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-
 @protocol ZHCoreModelProviderProtocol <NSObject>
 
 + (Class)zh_coreDataEntity;
 
-- (void)zh_packageEntityData:(NSManagedObject *)objc;
+@optional
+- (NSDictionary *)zh_coreDataStoreCustomKeys;
 
-+ (instancetype)zh_reversePackagingWithEntityData:(NSManagedObject *)objc;
-
+- (NSArray *)zh_coreDataStoreKeys;
 
 @end
 
