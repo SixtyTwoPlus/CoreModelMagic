@@ -20,6 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)zh_setupCoreDataNotifyWith:(Class)modelClass sortedBy:(NSString *)sortedBy ascending:(BOOL)ascending groupBy:(NSString * _Nullable)groupBy predicate:(NSPredicate *)predicate delegate:(id <ZHCoreModelMagicObsDelegate>)delegate;
 
++ (void)zh_resetupCoreDataNotifyWith:(Class)modelClass sortedBy:(NSString *)sortedBy ascending:(BOOL)ascending groupBy:(NSString * _Nullable)groupBy predicate:(NSPredicate *)predicate;
+
 - (instancetype)init NS_UNAVAILABLE;
 
 + (instancetype)new NS_UNAVAILABLE;

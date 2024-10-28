@@ -13,8 +13,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ZHCoreModelExample : ZHCoreModelAbstruct <ZHCoreModelProviderProtocol>
 
-@property (nonatomic,copy,nullable) NSString *content;
-@property (nonatomic,assign) NSInteger count;
+@property (nonatomic,copy,nullable) NSString    *content;
+@property (nonatomic,assign) NSInteger          count;
+@property (nonatomic,copy) NSString             *userId;
 
 @end
 

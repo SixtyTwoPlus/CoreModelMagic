@@ -23,6 +23,7 @@
         @"id" : @"id",
         @"content" : @"text",
         @"count" : @"count",
+        @"userId" : @"userId",
     };
 }
 

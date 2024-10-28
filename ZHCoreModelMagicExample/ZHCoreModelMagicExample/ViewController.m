@@ -20,12 +20,9 @@
     // Do any additional setup after loading the view
     
     [ZHCoreModelMagic zh_setupCoreDataWithName:@"hhh"];
-    
-    NSArray * ab = [ZHCoreModelExample zh_queryAll];
-    
     [ZHCoreModelExample zh_deleteAll];
     
-    [ZHCoreModelMagic zh_setupCoreDataNotifyWith:ZHCoreModelExample.class sortedBy:@"text" ascending:YES groupBy:nil predicate:[NSPredicate predicateWithValue:YES] delegate:self];
+    [ZHCoreModelMagic zh_setupCoreDataNotifyWith:ZHCoreModelExample.class sortedBy:@"text" ascending:YES groupBy:nil predicate:[NSPredicate predicateWithFormat:@"userId = %@",@"123"] delegate:self];
     
     NSArray *arr3 = @[@"A",@"B",@"C",@"D",@"E",@"F",@"G",@"H",@"I",@"J"];
     NSMutableArray *arr = [NSMutableArray array];
@@ -33,19 +30,27 @@
         ZHCoreModelExample *example = [ZHCoreModelExample new];
         example.content = arr3[i];
         example.count = i;
+        example.userId = @"123";
         [arr addObject:example];
     }
     [arr makeObjectsPerformSelector:@selector(zh_saveOrUpdate)];
     
-    NSArray * a =  [ZHCoreModelExample zh_quertWithKey:@"count" value:@(5)];
-    NSLog(@"");
     
-}
+    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 100, 100)];
+    [button setTitle:@"设置新id" forState:UIControlStateNormal];
+    [button setTitleColor:UIColor.redColor forState:UIControlStateNormal];
+    [button addAction:[UIAction actionWithHandler:^(__kindof UIAction * _Nonnull action) {
+        [ZHCoreModelMagic zh_resetupCoreDataNotifyWith:ZHCoreModelExample.class sortedBy:@"text" ascending:YES groupBy:nil predicate:[NSPredicate predicateWithFormat:@"userId = %@",@"456"]];
+        
+        NSArray *arr = [ZHCoreModelExample zh_queryAll];
+        for (ZHCoreModelExample *e in arr) {
+            e.userId = @"456";
+            [e zh_saveOrUpdate];
+        }
+    }] forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:button];
 
-- (void)zh_coreModelObserverCoreDataDidChangeObject:(id)object atIndexPath:(NSIndexPath *)indexPath changeType:(NSFetchedResultsChangeType)changeType newIndexPath:(NSIndexPath *)newIndexPath{
-    
-    
-    NSLog(@"");
+    button.center = self.view.center;
 }
 
 - (void)zh_coreModelObserverCoreDataListDidChanged:(NSArray *)array{

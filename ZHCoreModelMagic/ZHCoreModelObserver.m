@@ -37,6 +37,26 @@ ZH_SHAREINSTANCE_IMPLEMENT(ZHCoreModelObserver)
 
 #pragma mark - setup controller
 
+- (void)resetupCoreDataNotifyWith:(Class)modelClass sortedBy:(NSString *)sortedBy ascending:(BOOL)ascending groupBy:(NSString *)groupBy predicate:(NSPredicate *)predicate{
+    
+    id entity = [modelClass performSelector:@selector(zh_coreDataEntity)];
+    NSString *entityClsName = NSStringFromClass([entity class]);
+    
+    if(![self.controllers.allKeys containsObject:entityClsName]){
+        return;
+    }
+    
+    NSString *groupObjc = ([ZHCoreModelTool zh_isStrNull:groupBy] ? sortedBy : groupBy);
+    NSArray * arguments = @[sortedBy,@(ascending),predicate,groupObjc,self,[NSManagedObjectContext MR_rootSavingContext]];
+    __autoreleasing NSFetchedResultsController *controller;
+    [ZHCoreModelTool classExecute:entity WithSelector:@selector(MR_fetchAllSortedBy:ascending:withPredicate:groupBy:delegate:inContext:) argumentTypes:arguments resultValue:&controller];
+    
+    NSMutableDictionary *dictM = [NSMutableDictionary dictionaryWithDictionary:self.controllers[entityClsName]];
+    [dictM setValue:controller forKey:CONTROLLER_KEY];
+    
+    [self.controllers setValue:dictM forKey:entityClsName];
+}
+
 - (void)obsSetupCoreDataNotifyWith:(Class)modelClass sortedBy:(NSString *)sortedBy ascending:(BOOL)ascending groupBy:(NSString *)groupBy predicate:(NSPredicate *)predicate delegate:(id <ZHCoreModelMagicObsDelegate>)delegate{
     if(![modelClass isSubclassOfClass:ZHCoreModelAbstruct.class]){
         NSAssert(NO, @"classmust be subClass of ZHCoreModelAbstruct");

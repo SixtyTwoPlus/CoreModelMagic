@@ -23,4 +23,8 @@
     [[ZHCoreModelObserver sharedInstance] obsSetupCoreDataNotifyWith:modelClass sortedBy:sortedBy ascending:ascending groupBy:groupBy predicate:predicate delegate:delegate];
 }
 
++ (void)zh_resetupCoreDataNotifyWith:(Class)modelClass sortedBy:(NSString *)sortedBy ascending:(BOOL)ascending groupBy:(NSString *)groupBy predicate:(NSPredicate *)predicate{
+    [[ZHCoreModelObserver sharedInstance] resetupCoreDataNotifyWith:modelClass sortedBy:sortedBy ascending:ascending groupBy:groupBy predicate:predicate];
+}
+
 @end
