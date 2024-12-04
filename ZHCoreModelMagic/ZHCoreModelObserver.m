@@ -110,7 +110,10 @@ ZH_SHAREINSTANCE_IMPLEMENT(ZHCoreModelObserver)
     Class modelClass = NSClassFromString(dict[CONTROLLER_MODEL_KEY]);
     NSArray * delegateNames = dict[CONTROLLER_DELEGATES_KEY];
     
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wundeclared-selector"
     id model = [modelClass performSelector:@selector(zh_reversePackagingWithEntityData:) withObject:anObject];
+#pragma clang diagnostic pop
     
     for (id <ZHCoreModelMagicObsDelegate> delegate in self.delegates) {
         NSString * itemClsName = NSStringFromClass(delegate.class);
@@ -154,6 +157,7 @@ ZH_SHAREINSTANCE_IMPLEMENT(ZHCoreModelObserver)
     Class modelClass = NSClassFromString(value[CONTROLLER_MODEL_KEY]);
     
     for (id <ZHCoreModelMagicObsDelegate> delegate in self.delegates) {
+        //list
         NSString * itemClsName = NSStringFromClass(delegate.class);
         BOOL needNotify = [delegateNames containsObject:itemClsName] && [delegate respondsToSelector:@selector(zh_coreModelObserverCoreDataListDidChanged:)];
         if(!needNotify){
@@ -161,10 +165,38 @@ ZH_SHAREINSTANCE_IMPLEMENT(ZHCoreModelObserver)
         }
         NSMutableArray *mutableArr = [NSMutableArray array];
         for (NSManagedObject * obj in controller.fetchedObjects) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wundeclared-selector"
             id modelObj = [modelClass performSelector:@selector(zh_reversePackagingWithEntityData:) withObject:obj];
+#pragma clang diagnostic pop
             [mutableArr addObject:modelObj];
         }
         [delegate zh_coreModelObserverCoreDataListDidChanged:mutableArr];
+        
+        //group
+        if (controller.sections.count == 0) {
+            return;
+        }
+        
+        BOOL needNotifyGroup = [delegateNames containsObject:itemClsName] && [delegate respondsToSelector:@selector(zh_coreModelObserverCoreDataListGroupDidChanged:)];
+        if (!needNotifyGroup) {
+            return;
+        }
+        
+        NSMutableDictionary *groupDict = [NSMutableDictionary dictionary];
+        for (id<NSFetchedResultsSectionInfo> sectionInfo in controller.sections) {
+            NSMutableArray *datas = [NSMutableArray array];
+            for (NSManagedObject *obj in sectionInfo.objects) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wundeclared-selector"
+                id modelObj = [modelClass performSelector:@selector(zh_reversePackagingWithEntityData:) withObject:obj];
+#pragma clang diagnostic pop
+                [datas addObject:modelObj];
+            }
+            groupDict[sectionInfo.name] = datas;
+        }
+        
+        [delegate zh_coreModelObserverCoreDataListGroupDidChanged:groupDict];
     }
 }
 

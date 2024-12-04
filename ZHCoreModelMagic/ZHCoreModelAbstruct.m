@@ -63,10 +63,6 @@ ZH_SHAREINSTANCE_IMPLEMENT(ZHCoreModelAbstructContext)
     return [self.class zh_deleteWithPredicate:ZH_PREDICATE(@"id = %@",self.id)];
 }
 
-- (void)zh_saveOrUpdate{
-    [self zh_asyncSaveOrUpdate];
-}
-
 - (void)zh_asyncSaveOrUpdate{
     [self zh_asyncSaveOrUpdateWithComplete:nil];
 }
@@ -80,9 +76,7 @@ ZH_SHAREINSTANCE_IMPLEMENT(ZHCoreModelAbstructContext)
                 if(complete){
                     complete();
                 }
-                dispatch_semaphore_signal(ZHCoreModelAbstructContext.sharedInstance.semaphore);
             }];
-            dispatch_semaphore_wait(ZHCoreModelAbstructContext.sharedInstance.semaphore, DISPATCH_TIME_FOREVER);
         });
     };
     
@@ -129,7 +123,7 @@ ZH_SHAREINSTANCE_IMPLEMENT(ZHCoreModelAbstructContext)
 }
 
 + (BOOL)zh_deleteWithKey:(NSString *)key value:(NSString *)value{
-    return [self zh_deleteWithPredicate:ZH_PREDICATE(@"%@ = %@",key,value)];
+    return [self zh_deleteWithPredicate:ZH_PREDICATE([self generatePredicateStrWithKey:key value:value])];
 }
 
 + (NSArray *)zh_queryAll{
@@ -177,6 +171,25 @@ ZH_SHAREINSTANCE_IMPLEMENT(ZHCoreModelAbstructContext)
         [repackagineArray addObject:model];
     }
     return repackagineArray;
+}
+
++ (NSDictionary *)zh_queryAllWithPredicate:(NSPredicate *)predicate groupBy:(NSString *)group sorted:(NSString *)sorted ascending:(BOOL)ascending{
+    __autoreleasing NSFetchedResultsController *controller;
+    Class cls = [self performSelector:@selector(zh_coreDataEntity)];
+    [ZHCoreModelTool classExecute:cls WithSelector:@selector(MR_fetchAllGroupedBy:withPredicate:sortedBy:ascending:) argumentTypes:@[group,predicate,sorted,@(ascending)] resultValue:&controller];
+    if (!controller) {
+        return nil;
+    }
+    NSMutableDictionary *groupDict = [NSMutableDictionary dictionary];
+    for (id <NSFetchedResultsSectionInfo> sectionInfo in controller.sections) {
+        NSMutableArray *datas = [NSMutableArray array];
+        for (NSManagedObject *obj in sectionInfo.objects) {
+            id modelObj = [self zh_reversePackagingWithEntityData:obj];
+            [datas addObject:modelObj];
+        }
+        groupDict[sectionInfo.name] = datas;
+    }
+    return groupDict;
 }
 
 + (instancetype)zh_reversePackagingWithEntityData:(NSManagedObject *)obj{

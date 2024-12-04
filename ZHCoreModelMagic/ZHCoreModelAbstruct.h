@@ -17,8 +17,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)zh_deleteThisData;
 
-- (void)zh_saveOrUpdate;
-
 - (void)zh_asyncSaveOrUpdate;
 
 - (void)zh_asyncSaveOrUpdateWithComplete:(dispatch_block_t _Nullable)complete;

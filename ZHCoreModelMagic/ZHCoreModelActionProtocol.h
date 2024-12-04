@@ -28,6 +28,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSArray *)zh_queryAllWithPredicate:(NSPredicate *)predicate sorted:(NSString * _Nullable)sorted ascending:(BOOL)ascending;
 
++ (NSDictionary *)zh_queryAllWithPredicate:(NSPredicate *)predicate groupBy:(NSString *)group sorted:(NSString *)sorted ascending:(BOOL)ascending;
+
 @end
 
 @protocol ZHCoreModelProviderProtocol <NSObject>
@@ -45,6 +47,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @optional
 - (void)zh_coreModelObserverCoreDataListDidChanged:(NSArray *)array;
+
+- (void)zh_coreModelObserverCoreDataListGroupDidChanged:(NSDictionary *)data;
 
 - (void)zh_coreModelObserverCoreDataDidChangeObject:(id)object atIndexPath:(NSIndexPath *)indexPath changeType:(NSFetchedResultsChangeType)changeType newIndexPath:(NSIndexPath *)newIndexPath;
 
